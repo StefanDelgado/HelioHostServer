@@ -27,11 +27,16 @@ function handlePostRequest() {
                 $email = $input['email'];
                 $username = $input['username'];
                 $password = password_hash($input['password'], PASSWORD_DEFAULT);
+                $api_id = bin2hex(random_bytes(16)); // Generate a unique API ID
 
                 // Create microservice user
-                $sql = "INSERT INTO microservice_users (email, username, password) VALUES ('$email', '$username', '$password')";
+                $sql = "INSERT INTO microservice_users (email, username, password, api_id) VALUES ('$email', '$username', '$password', '$api_id')";
 
                 if ($conn->query($sql) === TRUE) {
+                    // Update the users table with the new API ID
+                    $updateSql = "UPDATE users SET api_id = '$api_id' WHERE username = '$username'";
+                    $conn->query($updateSql);
+
                     echo json_encode(['message' => 'Microservice user registered successfully']);
                 } else {
                     echo json_encode(['message' => 'Error: ' . $sql . '<br>' . $conn->error]);
@@ -72,8 +77,8 @@ function handleGetRequest() {
         $headers = apache_request_headers();
         $api_key = $headers['Authorization'] ?? '';
 
-        // Validate API key
-        $sql = "SELECT * FROM microservice_users WHERE username = '$username' AND api_id = '$api_key'";
+        // Validate API key against the users table
+        $sql = "SELECT * FROM users WHERE username = '$username' AND api_id = '$api_key'";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
