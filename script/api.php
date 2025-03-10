@@ -17,6 +17,13 @@ switch ($method) {
         break;
 }
 
+function validateApiId($apiId) {
+    global $conn;
+    $sql = "SELECT * FROM users WHERE api_id = '$apiId'";
+    $result = $conn->query($sql);
+    return $result->num_rows > 0;
+}
+
 function handlePostRequest() {
     global $conn;
     $input = json_decode(file_get_contents('php://input'), true);
@@ -35,9 +42,11 @@ function handlePostRequest() {
                 if ($conn->query($sql) === TRUE) {
                     // Update the users table with the new API ID
                     $updateSql = "UPDATE users SET api_id = '$api_id' WHERE username = '$username'";
-                    $conn->query($updateSql);
-
-                    echo json_encode(['message' => 'Microservice user registered successfully']);
+                    if ($conn->query($updateSql) === TRUE) {
+                        echo json_encode(['message' => 'Microservice user registered successfully']);
+                    } else {
+                        echo json_encode(['message' => 'Error updating users table: ' . $conn->error]);
+                    }
                 } else {
                     echo json_encode(['message' => 'Error: ' . $sql . '<br>' . $conn->error]);
                 }
@@ -76,6 +85,10 @@ function handleGetRequest() {
         $username = $_GET['username'];
         $headers = apache_request_headers();
         $api_key = $headers['Authorization'] ?? '';
+
+        // Debugging information
+        error_log("Username: $username");
+        error_log("API Key: $api_key");
 
         // Validate API key against the users table
         $sql = "SELECT * FROM users WHERE username = '$username' AND api_id = '$api_key'";
