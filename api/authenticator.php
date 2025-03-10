@@ -22,7 +22,7 @@ function authenticate() {
     error_log("API Key: $api_key");
 
     if (empty($api_key)) {
-        echo json_encode(['message' => 'API key is missing']);
+        echo json_encode(['message' => 'API key is missing', 'api_key' => $api_key]);
         http_response_code(401);
         exit;
     }
