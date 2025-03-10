@@ -8,6 +8,10 @@ function authenticate() {
     $headers = apache_request_headers();
     $api_key = $headers['Authorization'] ?? '';
 
+    // Debugging information
+    error_log("Headers: " . json_encode($headers));
+    error_log("API Key: $api_key");
+
     if (empty($api_key)) {
         echo json_encode(['message' => 'API key is missing']);
         http_response_code(401);
