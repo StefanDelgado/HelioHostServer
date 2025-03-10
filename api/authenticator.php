@@ -5,11 +5,19 @@ include dirname(__DIR__) . '/Settings/db.php';
 
 function authenticate() {
     global $conn;
-    $headers = apache_request_headers();
-    error_log("Headers: " . json_encode($headers)); // Log all headers
 
+    // Try to get the Authorization header from apache_request_headers()
+    $headers = apache_request_headers();
     $api_key = $headers['Authorization'] ?? '';
-    error_log("API Key: $api_key"); // Log the API key
+
+    // If the Authorization header is not found, try to get it from $_SERVER
+    if (empty($api_key) && isset($_SERVER['HTTP_AUTHORIZATION'])) {
+        $api_key = $_SERVER['HTTP_AUTHORIZATION'];
+    }
+
+    // Log headers and API key for debugging
+    error_log("Headers: " . json_encode($headers));
+    error_log("API Key: $api_key");
 
     if (empty($api_key)) {
         echo json_encode(['message' => 'API key is missing']);
