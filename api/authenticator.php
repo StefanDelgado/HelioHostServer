@@ -12,6 +12,11 @@ function authenticate() {
         $api_key = $_SERVER['HTTP_AUTHORIZATION'];
     } elseif (isset($_SERVER['REDIRECT_HTTP_AUTHORIZATION'])) {
         $api_key = $_SERVER['REDIRECT_HTTP_AUTHORIZATION'];
+    } elseif (function_exists('apache_request_headers')) {
+        $headers = apache_request_headers();
+        if (isset($headers['Authorization'])) {
+            $api_key = $headers['Authorization'];
+        }
     }
 
     // Log headers and API key for debugging
