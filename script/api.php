@@ -17,21 +17,9 @@ switch ($method) {
         break;
 }
 
-function validateApiId($apiId) {
-    global $conn;
-    $sql = "SELECT * FROM users WHERE api_id = '$apiId'";
-    $result = $conn->query($sql);
-    return $result->num_rows > 0;
-}
-
 function handlePostRequest() {
     global $conn;
     $input = json_decode(file_get_contents('php://input'), true);
-
-    if (!isset($_SERVER['HTTP_API_ID']) || !validateApiId($_SERVER['HTTP_API_ID'])) {
-        echo json_encode(['message' => 'Invalid API ID']);
-        return;
-    }
 
     if (isset($input['action'])) {
         switch ($input['action']) {
@@ -39,16 +27,11 @@ function handlePostRequest() {
                 $email = $input['email'];
                 $username = $input['username'];
                 $password = password_hash($input['password'], PASSWORD_DEFAULT);
-                
 
                 // Create microservice user
-                $sql = "INSERT INTO microservice_users (email, username, password, api_id) VALUES ('$email', '$username', '$password', '$api_id')";
+                $sql = "INSERT INTO microservice_users (email, username, password) VALUES ('$email', '$username', '$password')";
 
                 if ($conn->query($sql) === TRUE) {
-                    // Update the users table with the new API ID
-                    $updateSql = "UPDATE users SET api_id = '$api_id' WHERE username = '$username'";
-                    $conn->query($updateSql);
-
                     echo json_encode(['message' => 'Microservice user registered successfully']);
                 } else {
                     echo json_encode(['message' => 'Error: ' . $sql . '<br>' . $conn->error]);
@@ -58,7 +41,6 @@ function handlePostRequest() {
             case 'login':
                 $username = $input['username'];
                 $password = $input['password'];
-
                 $sql = "SELECT * FROM microservice_users WHERE username = '$username'";
                 $result = $conn->query($sql);
 
@@ -85,15 +67,13 @@ function handlePostRequest() {
 
 function handleGetRequest() {
     global $conn;
-
-    if (!isset($_SERVER['HTTP_API_ID']) || !validateApiId($_SERVER['HTTP_API_ID'])) {
-        echo json_encode(['message' => 'Invalid API ID']);
-        return;
-    }
-
     if (isset($_GET['username'])) {
         $username = $_GET['username'];
-        $sql = "SELECT * FROM microservice_users WHERE username = '$username'";
+        $headers = apache_request_headers();
+        $api_key = $headers['Authorization'] ?? '';
+
+        // Validate API key
+        $sql = "SELECT * FROM microservice_users WHERE username = '$username' AND api_id = '$api_key'";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
@@ -101,7 +81,7 @@ function handleGetRequest() {
             unset($user['password']); // Remove password from the response
             echo json_encode($user);
         } else {
-            echo json_encode(['message' => 'User not found']);
+            echo json_encode(['message' => 'User not found or invalid API key']);
         }
     } else {
         echo json_encode(['message' => 'Username not specified']);
