@@ -12,14 +12,16 @@ function authenticate() {
     error_log("Headers: " . json_encode($headers));
     error_log("API Key: $api_key");
 
+    $sql = "SELECT * FROM users WHERE api_id = '$api_key'";
+    $result = $conn->query($sql);
+
     if (empty($api_key)) {
         echo json_encode(['message' => 'API key is missing']);
         http_response_code(401);
         exit;
     }
 
-    $sql = "SELECT * FROM users WHERE api_id = '$api_key'";
-    $result = $conn->query($sql);
+   
 
     if ($result->num_rows > 0) {
         return true;
