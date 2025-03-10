@@ -15,6 +15,8 @@ function authenticate() {
         $api_key = $_SERVER['HTTP_AUTHORIZATION'];
     } elseif (empty($api_key) && isset($_SERVER['REDIRECT_HTTP_AUTHORIZATION'])) {
         $api_key = $_SERVER['REDIRECT_HTTP_AUTHORIZATION'];
+    } elseif (empty($api_key) && isset($_SERVER['HTTP_AUTHORIZATION'])) {
+        $api_key = $_SERVER['HTTP_AUTHORIZATION'];
     }
 
     // Log headers and API key for debugging
@@ -22,7 +24,7 @@ function authenticate() {
     error_log("API Key: $api_key");
 
     if (empty($api_key)) {
-        echo json_encode(['message' => 'API key is missing', 'api_key' => $api_key]);
+        echo json_encode(['message' => 'API key is missing']);
         http_response_code(401);
         exit;
     }
