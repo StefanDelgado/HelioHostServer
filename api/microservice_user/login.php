@@ -2,6 +2,10 @@
 // filepath: /C:/xampp/htdocs/WebDesign_BSITA-2/2nd sem/Joshan_System/HelioHostServer/api/microservice_user/login.php
 
 include '../../Settings/db.php';
+include '../authenticator.php';
+
+// Authenticate the API key
+authenticate();
 
 $input = json_decode(file_get_contents('php://input'), true);
 
