@@ -6,20 +6,19 @@ include dirname(__DIR__) . '/Settings/db.php';
 function authenticate() {
     global $conn;
 
-    // Try to get the Authorization header from $_SERVER
-    $api_key = '';
-    if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
+    // Try to get the Authorization header from apache_request_headers()
+    $headers = apache_request_headers();
+    $api_key = $headers['Authorization'] ?? '';
+
+    // If the Authorization header is not found, try to get it from $_SERVER
+    if (empty($api_key) && isset($_SERVER['HTTP_AUTHORIZATION'])) {
         $api_key = $_SERVER['HTTP_AUTHORIZATION'];
-    } elseif (isset($_SERVER['REDIRECT_HTTP_AUTHORIZATION'])) {
+    } elseif (empty($api_key) && isset($_SERVER['REDIRECT_HTTP_AUTHORIZATION'])) {
         $api_key = $_SERVER['REDIRECT_HTTP_AUTHORIZATION'];
-    } elseif (function_exists('apache_request_headers')) {
-        $headers = apache_request_headers();
-        if (isset($headers['Authorization'])) {
-            $api_key = $headers['Authorization'];
-        }
     }
 
     // Log headers and API key for debugging
+    error_log("Headers: " . json_encode($headers));
     error_log("API Key: $api_key");
 
     if (empty($api_key)) {
