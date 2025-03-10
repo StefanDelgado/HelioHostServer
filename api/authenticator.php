@@ -1,7 +1,7 @@
 <?php
 // filepath: /C:/xampp/htdocs/WebDesign_BSITA-2/2nd sem/Joshan_System/HelioHostServer/api/authenticator.php
 
-include '../Settings/db.php';
+include dirname(__DIR__) . '/Settings/db.php';
 
 function authenticate() {
     global $conn;
