@@ -13,7 +13,7 @@ include '../../Settings/db.php';
 include '../authenticator.php';
 
 // Authenticate the API key
-authenticate();
+
 
 $input = json_decode(file_get_contents('php://input'), true);
 
