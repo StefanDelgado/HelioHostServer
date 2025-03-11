@@ -5,7 +5,6 @@ include '../../Settings/db.php';
 include '../authenticator.php';
 
 // Authenticate the API key
-authenticate();
 
 $input = json_decode(file_get_contents('php://input'), true);
 
@@ -18,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($result->num_rows > 0) {
         $user = $result->fetch_assoc();
         if (password_verify($password, $user['password'])) {
-            echo json_encode(['message' => 'Login successful', 'api_id' => $user['api_id']]);
+            echo json_encode(['message' => 'Login successful']);
         } else {
             echo json_encode(['message' => 'Invalid username or password']);
         }
