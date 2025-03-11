@@ -13,7 +13,7 @@ include '../../../Settings/db.php';
 include '../../authenticator.php';
 
 // Authenticate the API key
-authenticate();
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     if (isset($_GET['username'])) {
