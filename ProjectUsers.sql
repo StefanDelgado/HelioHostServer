@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS microservice_users (
     email VARCHAR(100) NOT NULL UNIQUE,
     username VARCHAR(50) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
-    api_id VARCHAR(255) NOT NULL UNIQUE,
+    api_id VARCHAR(255) NOT NULL,
     date_created DATETIME NOT NULL,
     role_id INT(3) UNSIGNED ZEROFILL,
     type_id INT(3) UNSIGNED ZEROFILL,
@@ -45,8 +45,3 @@ CREATE TABLE IF NOT EXISTS microservice_users (
     FOREIGN KEY (type_id) REFERENCES tbl_type(type_id)
 );
 
--- Insert default roles if they don't exist
-INSERT IGNORE INTO roles (role_name) VALUES ('admin'), ('staff'), ('owner');
-
--- Insert default types if they don't exist
-INSERT IGNORE INTO tbl_type (type_name) VALUES ('delivery'), ('business'), ('supplier');

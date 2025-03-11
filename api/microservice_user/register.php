@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $input['email'];
     $username = $input['username'];
     $password = password_hash($input['password'], PASSWORD_DEFAULT);
-    $api_id = "";
+    $api_id = ""); // Generate a unique API ID
     $date_created = date('Y-m-d H:i:s');
     $roles = $input['roles'] ?? 'user'; // Default role is 'user'
     $type_id = $input['type_id'] ?? null; // Default type_id is null
