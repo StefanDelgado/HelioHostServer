@@ -17,16 +17,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $input['email'];
     $username = $input['username'];
     $password = password_hash($input['password'], PASSWORD_DEFAULT);
+    $api_id = "";
     $date_created = date('Y-m-d H:i:s');
     $roles = $input['roles'] ?? 'user'; // Default role is 'user'
+    $type_id = $input['type_id'] ?? null; // Default type_id is null
     $date_updated = $date_created;
 
     // Create microservice user
-    $sql = "INSERT INTO microservice_users (email, username, password, api_id, date_created, roles, date_updated) VALUES ('$email', '$username', '$password', '$api_id', '$date_created', '$roles', '$date_updated')";
+    $sql = "INSERT INTO microservice_users (email, username, password, api_id, date_created, role_id, type_id, date_updated) VALUES ('$email', '$username', '$password', '$api_id', '$date_created', (SELECT role_id FROM roles WHERE role_name = '$roles'), '$type_id', '$date_updated')";
 
     if ($conn->query($sql) === TRUE) {
         // Update the users table with the new API ID
-        $updateSql = "UPDATE users SET api_id = '$api_id', date_created = '$date_created', roles = '$roles', date_updated = '$date_updated' WHERE username = '$username'";
+        $updateSql = "UPDATE users SET api_id = '$api_id', date_created = '$date_created', role_id = (SELECT role_id FROM roles WHERE role_name = '$roles'), type_id = '$type_id', date_updated = '$date_updated' WHERE username = '$username'";
         if ($conn->query($updateSql) === TRUE) {
             echo json_encode(['message' => 'Microservice user registered successfully']);
         } else {
