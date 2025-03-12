@@ -28,6 +28,9 @@ switch (true) {
     case preg_match('/\/api\/microservice_user\/crud\/delete/', $path):
         include 'microservice_user/crud/delete.php';
         break;
+    case preg_match('/\/api\/microservice_supplier_products\/crud\/create/', $path):
+        include 'microservice_supplier_products/crud/create.php';
+        break;
     default:
         echo json_encode(['message' => 'Invalid endpoint']);
         http_response_code(404);
