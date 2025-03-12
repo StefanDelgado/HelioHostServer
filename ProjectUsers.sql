@@ -45,14 +45,6 @@ CREATE TABLE IF NOT EXISTS microservice_users (
     FOREIGN KEY (type_id) REFERENCES tbl_type(type_id)
 );
 
--- Create suppliers table if it doesn't exist
-CREATE TABLE IF NOT EXISTS suppliers (
-    supplier_id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    contact_info TEXT NOT NULL,
-    address TEXT NOT NULL
-);
-
 -- Create products table if it doesn't exist
 CREATE TABLE IF NOT EXISTS products (
     product_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -63,7 +55,9 @@ CREATE TABLE IF NOT EXISTS products (
     category VARCHAR(255) NOT NULL,
     description TEXT,
     image_url TEXT,
-    FOREIGN KEY (supplier_id) REFERENCES suppliers(supplier_id)
+    FOREIGN KEY (supplier_id) REFERENCES microservice_users(id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
 );
 
 -- Create orders table if it doesn't exist
