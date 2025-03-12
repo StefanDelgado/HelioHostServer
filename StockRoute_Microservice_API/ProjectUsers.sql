@@ -69,8 +69,8 @@ CREATE TABLE IF NOT EXISTS orders (
     order_status ENUM('Pending', 'Processing', 'Delivered', 'Cancelled') NOT NULL,
     order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     delivery_date DATE,
-    FOREIGN KEY (business_id) REFERENCES users(id),
-    FOREIGN KEY (supplier_id) REFERENCES suppliers(supplier_id)
+    FOREIGN KEY (business_id) REFERENCES microservice_users(id),
+    FOREIGN KEY (supplier_id) REFERENCES microservice_users(id)
 );
 
 -- Insert default roles if they don't exist
