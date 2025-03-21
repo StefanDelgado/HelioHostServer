@@ -13,23 +13,26 @@ include '../../../Settings/db.php';
 include '../../authenticator.php';
 
 // Authenticate the API key
-//authenticate();
+authenticate();
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    if (isset($_GET['product_id'])) {
-        $product_id = $_GET['product_id'];
-        $sql = "SELECT * FROM products WHERE product_id = '$product_id'";
+    if (isset($_GET['supplier_id'])) {
+        $supplier_id = $_GET['supplier_id'];
+        $sql = "SELECT * FROM products WHERE supplier_id = '$supplier_id'";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
-            $product = $result->fetch_assoc();
-            echo json_encode($product);
+            $products = [];
+            while ($product = $result->fetch_assoc()) {
+                $products[] = $product;
+            }
+            echo json_encode($products);
         } else {
-            echo json_encode(['message' => 'Product not found']);
+            echo json_encode(['message' => 'No products found for the given supplier']);
             http_response_code(404);
         }
     } else {
-        echo json_encode(['message' => 'Product ID not specified']);
+        echo json_encode(['message' => 'Supplier ID not specified']);
         http_response_code(400);
     }
 } else {
