@@ -73,6 +73,22 @@ CREATE TABLE IF NOT EXISTS orders (
     FOREIGN KEY (supplier_id) REFERENCES microservice_users(id)
 );
 
+-- Create order_items table if it doesn't exist
+CREATE TABLE IF NOT EXISTS order_items (
+    order_item_id INT AUTO_INCREMENT PRIMARY KEY,
+    order_id INT NOT NULL,
+    product_id INT NOT NULL,
+    quantity INT NOT NULL,
+    unit_price DECIMAL(10,2) NOT NULL,
+    subtotal DECIMAL(10,2) NOT NULL,
+    FOREIGN KEY (order_id) REFERENCES orders(order_id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+    FOREIGN KEY (product_id) REFERENCES products(product_id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
+
 -- Insert default roles if they don't exist
 INSERT IGNORE INTO roles (role_id, role_name) VALUES 
 (201, 'admin'), 
