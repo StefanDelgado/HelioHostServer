@@ -13,13 +13,12 @@ include '../../../Settings/db.php';
 include '../../authenticator.php';
 
 // Authenticate the API key
-//authenticate();
+authenticate();
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $sql = "SELECT DISTINCT microservice_users.* 
             FROM microservice_users 
-            INNER JOIN products ON microservice_users.id = products.supplier_id
-            WHERE microservice_users.role_id = 303";
+            INNER JOIN products ON microservice_users.id = products.supplier_id";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
