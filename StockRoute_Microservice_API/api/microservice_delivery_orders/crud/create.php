@@ -47,7 +47,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         foreach ($order_items as $item) {
             $subtotal = $item['quantity'] * $item['unit_price'];
-            $item_stmt->bind_param("iidd", 
+            // Fix: Added missing parameter in bind_param
+            $item_stmt->bind_param("iiidd", 
                 $order_id,
                 $item['product_id'],
                 $item['quantity'],
