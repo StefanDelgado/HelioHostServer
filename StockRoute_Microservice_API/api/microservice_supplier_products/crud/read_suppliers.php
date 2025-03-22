@@ -16,9 +16,10 @@ include '../../authenticator.php';
 //authenticate();
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    $sql = "SELECT DISTINCT suppliers.* 
-            FROM suppliers 
-            INNER JOIN products ON suppliers.supplier_id = products.supplier_id";
+    $sql = "SELECT DISTINCT microservice_users.* 
+            FROM microservice_users 
+            INNER JOIN products ON microservice_users.id = products.supplier_id
+            WHERE microservice_users.role_id = 303";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
