@@ -6,6 +6,9 @@ include 'Settings/db.php';
 function getMicroserviceUsers($conn) {
     $sql = "SELECT id, name, email FROM microservice_users";
     $result = $conn->query($sql);
+    if (!$result) {
+        die("Query Failed: " . $conn->error);
+    }
     return $result->fetch_all(MYSQLI_ASSOC);
 }
 
@@ -13,6 +16,9 @@ function getMicroserviceUsers($conn) {
 function getSupplierProducts($conn) {
     $sql = "SELECT id, product_name, price, supplier_id FROM products";
     $result = $conn->query($sql);
+    if (!$result) {
+        die("Query Failed: " . $conn->error);
+    }
     return $result->fetch_all(MYSQLI_ASSOC);
 }
 
