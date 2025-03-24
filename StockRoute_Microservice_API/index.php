@@ -2,16 +2,16 @@
 // Include database connection
 include 'Settings/db.php';
 
-// Function to fetch Microservice Users
+// Function to fetch all Microservice Users
 def getMicroserviceUsers($conn) {
-    $sql = "SELECT * FROM microservice_users";
+    $sql = "SELECT id, name, email FROM microservice_users";
     $result = $conn->query($sql);
     return $result->fetch_all(MYSQLI_ASSOC);
 }
 
-// Function to fetch Supplier Products
+// Function to fetch all Supplier Products
 def getSupplierProducts($conn) {
-    $sql = "SELECT * FROM supplier_products";
+    $sql = "SELECT id, product_name, price, supplier_id FROM products";
     $result = $conn->query($sql);
     return $result->fetch_all(MYSQLI_ASSOC);
 }
@@ -53,12 +53,14 @@ $products = getSupplierProducts($conn);
             <th>ID</th>
             <th>Product Name</th>
             <th>Price</th>
+            <th>Supplier ID</th>
         </tr>
         <?php foreach ($products as $product): ?>
         <tr>
             <td><?= $product['id'] ?></td>
             <td><?= $product['product_name'] ?></td>
             <td><?= $product['price'] ?></td>
+            <td><?= $product['supplier_id'] ?></td>
         </tr>
         <?php endforeach; ?>
     </table>
