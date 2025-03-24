@@ -80,6 +80,7 @@ $orders = getOrders($conn);
     <li>301 - Delivery</li>
     <li>302 - Business</li>
     <li>303 - Supplier</li>
+    <br><br>
     <table>
         <tr>
             <th>ID</th>
