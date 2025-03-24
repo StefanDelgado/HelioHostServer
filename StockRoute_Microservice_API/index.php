@@ -3,14 +3,14 @@
 include 'Settings/db.php';
 
 // Function to fetch all Microservice Users
-def getMicroserviceUsers($conn) {
+function getMicroserviceUsers($conn) {
     $sql = "SELECT id, name, email FROM microservice_users";
     $result = $conn->query($sql);
     return $result->fetch_all(MYSQLI_ASSOC);
 }
 
 // Function to fetch all Supplier Products
-def getSupplierProducts($conn) {
+function getSupplierProducts($conn) {
     $sql = "SELECT id, product_name, price, supplier_id FROM products";
     $result = $conn->query($sql);
     return $result->fetch_all(MYSQLI_ASSOC);
