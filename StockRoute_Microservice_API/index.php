@@ -140,5 +140,6 @@ $orders = getOrders($conn);
         </tr>
         <?php endforeach; ?>
     </table>
+    <br><br><br><br>
 </body>
 </html>
