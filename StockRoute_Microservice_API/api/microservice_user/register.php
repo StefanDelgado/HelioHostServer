@@ -1,13 +1,12 @@
 <?php
-// filepath: /C:/xampp/htdocs/WebDesign_BSITA-2/2nd sem/Joshan_System/HelioHostServer/api/microservice_user/register.php
-
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type, Authorization");
-header("Access-Control-Allow-Credentials: true");
+header("Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With");
+header("Access-Control-Allow-Credentials: true"); 
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    exit(0);
+    http_response_code(200);
+    exit();
 }
 
 include '../../Settings/db.php';
@@ -18,25 +17,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $input['email'];
     $username = $input['username'];
     $password = password_hash($input['password'], PASSWORD_DEFAULT);
-    $api_id = ""); // Generate a unique API ID
+    $api_id = uniqid(); // Generate unique API ID
     $date_created = date('Y-m-d H:i:s');
-    $roles = $input['roles'] ?? 'user'; // Default role is 'user'
-    $type_id = $input['type_id'] ?? null; // Default type_id is null
+    $roles = $input['roles'] ?? 'user'; 
+    $type_id = $input['type_id'] ?? null; 
     $date_updated = $date_created;
 
-    // Create microservice user
-    $sql = "INSERT INTO microservice_users (email, username, password, api_id, date_created, role_id, type_id, date_updated) VALUES ('$email', '$username', '$password', '$api_id', '$date_created', (SELECT role_id FROM roles WHERE role_name = '$roles'), '$type_id', '$date_updated')";
+    // Use prepared statements
+    $sql = "INSERT INTO microservice_users (email, username, password, api_id, date_created, role_id, type_id, date_updated) 
+            VALUES (?, ?, ?, ?, ?, (SELECT role_id FROM roles WHERE role_name = ?), ?, ?)";
 
-    if ($conn->query($sql) === TRUE) {
-        // Update the users table with the new API ID
-        $updateSql = "UPDATE users SET api_id = '$api_id', date_created = '$date_created', role_id = (SELECT role_id FROM roles WHERE role_name = '$roles'), type_id = '$type_id', date_updated = '$date_updated' WHERE username = '$username'";
-        if ($conn->query($updateSql) === TRUE) {
-            echo json_encode(['message' => 'Microservice user registered successfully']);
-        } else {
-            echo json_encode(['message' => 'Error updating users table: ' . $conn->error]);
-        }
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ssssssis", $email, $username, $password, $api_id, $date_created, $roles, $type_id, $date_updated);
+
+    if ($stmt->execute()) {
+        echo json_encode(['message' => 'Microservice user registered successfully']);
     } else {
-        echo json_encode(['message' => 'Error: ' . $sql . '<br>' . $conn->error]);
+        echo json_encode(['message' => 'Error: ' . $stmt->error]);
     }
 } else {
     echo json_encode(['message' => 'Invalid request method']);
