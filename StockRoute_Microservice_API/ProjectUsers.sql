@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS orders (
     business_id INT NOT NULL,
     supplier_id INT NOT NULL,
     total_price DECIMAL(10,2) NOT NULL,
-    order_status ENUM('Pending', 'Processing', 'Delivered', 'Cancelled') NOT NULL,
+    order_status ENUM('Pending', 'Processing','Ready to Pickup', 'Delivering', 'Delivered', 'Cancelled') NOT NULL,
     order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     delivery_date DATE,
     FOREIGN KEY (business_id) REFERENCES microservice_users(id),
