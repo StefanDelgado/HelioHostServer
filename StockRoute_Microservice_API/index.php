@@ -4,7 +4,7 @@ include 'Settings/db.php';
 
 // Function to fetch all Microservice Users
 function getMicroserviceUsers($conn) {
-    $sql = "SELECT id, username, email FROM microservice_users";
+    $sql = "SELECT id, username, email, role_id, type_id FROM microservice_users";
     $result = $conn->query($sql);
     if (!$result) {
         die("Query Failed: " . $conn->error);
@@ -74,12 +74,16 @@ $orders = getOrders($conn);
             <th>ID</th>
             <th>Username</th>
             <th>Email</th>
+            <th>Role ID</th>
+            <th>Type ID</th>
         </tr>
         <?php foreach ($users as $user): ?>
         <tr>
             <td><?= $user['id'] ?></td>
             <td><?= $user['username'] ?></td>
             <td><?= $user['email'] ?></td>
+            <td><?= $user['role_id'] ?></td>
+            <td><?= $user['type_id'] ?></td>
         </tr>
         <?php endforeach; ?>
     </table>
