@@ -1,3 +1,17 @@
+<?php
+include_once '../Settings/db.php';
+
+// Fetch products from database
+$sql = "SELECT * FROM microservice_products ORDER BY product_id ASC";
+$result = $conn->query($sql);
+$products = [];
+
+if ($result->num_rows > 0) {
+    while($row = $result->fetch_assoc()) {
+        $products[] = $row;
+    }
+}
+?>
 <!-- Supplier Products Section -->
 <div id="products" class="section">
         <h2>Supplier Products</h2>

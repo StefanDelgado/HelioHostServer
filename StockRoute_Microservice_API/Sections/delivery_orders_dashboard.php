@@ -1,3 +1,17 @@
+<?php
+include_once '../Settings/db.php';
+
+// Fetch orders from database
+$sql = "SELECT * FROM microservice_delivery_orders ORDER BY order_id ASC";
+$result = $conn->query($sql);
+$orders = [];
+
+if ($result->num_rows > 0) {
+    while($row = $result->fetch_assoc()) {
+        $orders[] = $row;
+    }
+}
+?>
 <!-- Orders Section -->
 <div id="orders" class="section">
         <h2>Orders</h2>

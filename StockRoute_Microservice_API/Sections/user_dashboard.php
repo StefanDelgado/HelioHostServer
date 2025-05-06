@@ -1,3 +1,19 @@
+<?php
+// filepath: c:\xampp\htdocs\WebDesign_BSITA-2\2nd sem\Joshan_System\HelioHostServer\StockRoute_Microservice_API\Sections\user_dashboard.php
+
+include_once '../Settings/db.php';
+
+// Fetch users from database
+$sql = "SELECT * FROM microservice_users ORDER BY id ASC";
+$result = $conn->query($sql);
+$users = [];
+
+if ($result->num_rows > 0) {
+    while($row = $result->fetch_assoc()) {
+        $users[] = $row;
+    }
+}
+?>
 <div id="users" class="section">
         <h2>Microservice Users</h2>
         <h3>Legend</h3>
