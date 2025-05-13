@@ -30,6 +30,7 @@ if ($result && $result->num_rows > 0) {
                 <th>Status</th>
                 <th>Order Date</th>
                 <th>Delivery Date</th>
+                <th>Actions</th>
             </tr>
             <?php foreach ($orders as $order): ?>
             <tr>
@@ -40,6 +41,10 @@ if ($result && $result->num_rows > 0) {
                 <td><?= htmlspecialchars($order['order_status']) ?></td>
                 <td><?= htmlspecialchars(date('M d, Y', strtotime($order['order_date']))) ?></td>
                 <td><?= $order['delivery_date'] ? htmlspecialchars(date('M d, Y', strtotime($order['delivery_date']))) : 'Not set' ?></td>
+                <td>
+                    <button class="edit-btn" data-id="<?= $order['order_id'] ?>">Edit</button>
+                    <button class="delete-btn" data-id="<?= $order['order_id'] ?>">Delete</button>
+                </td>
             </tr>
             <?php endforeach; ?>
         </table>

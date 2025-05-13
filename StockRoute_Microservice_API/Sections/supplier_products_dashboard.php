@@ -27,6 +27,7 @@ if ($result && $result->num_rows > 0) {
                 <th>Stock</th>
                 <th>Category</th>
                 <th>Description</th>
+                <th>Actions</th>
             </tr>
             <?php foreach ($products as $product): ?>
             <tr>
@@ -37,6 +38,10 @@ if ($result && $result->num_rows > 0) {
                 <td><?= htmlspecialchars($product['stock']) ?></td>
                 <td><?= htmlspecialchars($product['category']) ?></td>
                 <td><?= htmlspecialchars($product['description']) ?></td>
+                <td>
+                    <button class="edit-btn" data-id="<?= $product['product_id'] ?>">Edit</button>
+                    <button class="delete-btn" data-id="<?= $product['product_id'] ?>">Delete</button>
+                </td>
             </tr>
             <?php endforeach; ?>
         </table>
