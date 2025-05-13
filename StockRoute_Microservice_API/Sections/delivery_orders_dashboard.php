@@ -33,7 +33,7 @@ if ($result && $result->num_rows > 0) {
                 <th>Actions</th>
             </tr>
             <?php foreach ($orders as $order): ?>
-            <tr>
+            <tr data-id="<?= $order['order_id'] ?>">
                 <td><?= htmlspecialchars($order['order_id']) ?></td>
                 <td><?= htmlspecialchars($order['business_name']) ?></td>
                 <td><?= htmlspecialchars($order['supplier_name']) ?></td>
@@ -52,3 +52,51 @@ if ($result && $result->num_rows > 0) {
         <p>No orders found in the database.</p>
     <?php endif; ?>
 </div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // DELETE
+    document.querySelectorAll('.delete-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            if(confirm('Are you sure you want to delete this order?')) {
+                fetch('../api/microservice_delivery_orders/crud/delete.php', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ order_id: this.dataset.id })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    alert(data.message);
+                    location.reload();
+                });
+            }
+        });
+    });
+
+    // EDIT (simple prompt for demonstration: only status)
+    document.querySelectorAll('.edit-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            const row = btn.closest('tr');
+            const order_id = btn.dataset.id;
+            const status = row.children[4].textContent;
+
+            const newStatus = prompt('Edit order status:', status);
+
+            if(newStatus) {
+                fetch('../api/microservice_delivery_orders/crud/edit.php', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        order_id: order_id,
+                        order_status: newStatus
+                    })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    alert(data.message);
+                    location.reload();
+                });
+            }
+        });
+    });
+});
+</script>

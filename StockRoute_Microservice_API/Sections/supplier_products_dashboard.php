@@ -30,7 +30,7 @@ if ($result && $result->num_rows > 0) {
                 <th>Actions</th>
             </tr>
             <?php foreach ($products as $product): ?>
-            <tr>
+            <tr data-id="<?= $product['product_id'] ?>">
                 <td><?= htmlspecialchars($product['product_id']) ?></td>
                 <td><?= htmlspecialchars($product['name']) ?></td>
                 <td><?= htmlspecialchars($product['supplier_name']) ?></td>
@@ -49,3 +49,66 @@ if ($result && $result->num_rows > 0) {
         <p>No products found in the database.</p>
     <?php endif; ?>
 </div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // DELETE
+    document.querySelectorAll('.delete-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            if(confirm('Are you sure you want to delete this product?')) {
+                fetch('../api/microservice_supplier_products/crud/delete.php', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ product_id: this.dataset.id })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    alert(data.message);
+                    location.reload();
+                });
+            }
+        });
+    });
+
+    // EDIT (simple prompt for demonstration)
+    document.querySelectorAll('.edit-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            const row = btn.closest('tr');
+            const product_id = btn.dataset.id;
+            const name = row.children[1].textContent;
+            const supplier_name = row.children[2].textContent;
+            const price = row.children[3].textContent.replace(/[^\d.]/g, '');
+            const stock = row.children[4].textContent;
+            const category = row.children[5].textContent;
+            const description = row.children[6].textContent;
+
+            const newName = prompt('Edit product name:', name);
+            const newPrice = prompt('Edit price:', price);
+            const newStock = prompt('Edit stock:', stock);
+            const newCategory = prompt('Edit category:', category);
+            const newDescription = prompt('Edit description:', description);
+
+            if(newName && newPrice && newStock && newCategory && newDescription) {
+                fetch('../api/microservice_supplier_products/crud/edit.php', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        product_id: product_id,
+                        name: newName,
+                        supplier_id: row.children[2].dataset.supplierId || '', // You may want to improve this
+                        price: newPrice,
+                        stock: newStock,
+                        category: newCategory,
+                        description: newDescription,
+                        image_url: '' // Add if you want to support image editing
+                    })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    alert(data.message);
+                    location.reload();
+                });
+            }
+        });
+    });
+});
+</script>

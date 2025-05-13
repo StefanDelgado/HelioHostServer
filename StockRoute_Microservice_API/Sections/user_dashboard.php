@@ -39,7 +39,7 @@ if ($result->num_rows > 0) {
             <th>Actions</th>
         </tr>
         <?php foreach ($users as $user): ?>
-        <tr>
+        <tr data-id="<?= $user['id'] ?>">
             <td><?= htmlspecialchars($user['id']) ?></td>
             <td><?= htmlspecialchars($user['username']) ?></td>
             <td><?= htmlspecialchars($user['email']) ?></td>
@@ -53,3 +53,60 @@ if ($result->num_rows > 0) {
         <?php endforeach; ?>
     </table>
 </div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // DELETE
+    document.querySelectorAll('.delete-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            if(confirm('Are you sure you want to delete this user?')) {
+                fetch('../api/microservice_user/crud/delete.php', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ id: this.dataset.id })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    alert(data.message);
+                    location.reload();
+                });
+            }
+        });
+    });
+
+    // EDIT (simple prompt for demonstration)
+    document.querySelectorAll('.edit-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            const row = btn.closest('tr');
+            const id = btn.dataset.id;
+            const username = row.children[1].textContent;
+            const email = row.children[2].textContent;
+            const role_id = row.children[3].textContent;
+            const type_id = row.children[4].textContent;
+
+            const newUsername = prompt('Edit username:', username);
+            const newEmail = prompt('Edit email:', email);
+            const newRoleId = prompt('Edit role ID:', role_id);
+            const newTypeId = prompt('Edit type ID:', type_id);
+
+            if(newUsername && newEmail && newRoleId && newTypeId) {
+                fetch('../api/microservice_user/crud/edit.php', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        id: id,
+                        username: newUsername,
+                        email: newEmail,
+                        role_id: newRoleId,
+                        type_id: newTypeId
+                    })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    alert(data.message);
+                    location.reload();
+                });
+            }
+        });
+    });
+});
+</script>
