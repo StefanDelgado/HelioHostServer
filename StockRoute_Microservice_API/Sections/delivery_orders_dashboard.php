@@ -1,38 +1,49 @@
 <?php
 include_once '../Settings/db.php';
 
-// Fetch orders from database
-$sql = "SELECT * FROM microservice_delivery_orders ORDER BY order_id ASC";
+// Fetch orders from database with business and supplier information
+$sql = "SELECT o.*, 
+               b.username as business_name,
+               s.username as supplier_name
+        FROM orders o
+        LEFT JOIN microservice_users b ON o.business_id = b.id
+        LEFT JOIN microservice_users s ON o.supplier_id = s.id
+        ORDER BY o.order_date DESC";
 $result = $conn->query($sql);
 $orders = [];
 
-if ($result->num_rows > 0) {
+if ($result && $result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
         $orders[] = $row;
     }
 }
 ?>
-<!-- Orders Section -->
 <div id="orders" class="section">
-        <h2>Orders</h2>
+    <h2>Delivery Orders</h2>
+    <?php if (!empty($orders)): ?>
         <table>
             <tr>
                 <th>Order ID</th>
-                <th>Business ID</th>
-                <th>Supplier ID</th>
+                <th>Business</th>
+                <th>Supplier</th>
                 <th>Total Price</th>
-                <th>Order Status</th>
+                <th>Status</th>
                 <th>Order Date</th>
+                <th>Delivery Date</th>
             </tr>
             <?php foreach ($orders as $order): ?>
             <tr>
-                <td><?= $order['order_id'] ?></td>
-                <td><?= $order['business_id'] ?></td>
-                <td><?= $order['supplier_id'] ?></td>
-                <td><?= $order['total_price'] ?></td>
-                <td><?= $order['order_status'] ?></td>
-                <td><?= $order['order_date'] ?></td>
+                <td><?= htmlspecialchars($order['order_id']) ?></td>
+                <td><?= htmlspecialchars($order['business_name']) ?></td>
+                <td><?= htmlspecialchars($order['supplier_name']) ?></td>
+                <td>₱<?= htmlspecialchars(number_format($order['total_price'], 2)) ?></td>
+                <td><?= htmlspecialchars($order['order_status']) ?></td>
+                <td><?= htmlspecialchars(date('M d, Y', strtotime($order['order_date']))) ?></td>
+                <td><?= $order['delivery_date'] ? htmlspecialchars(date('M d, Y', strtotime($order['delivery_date']))) : 'Not set' ?></td>
             </tr>
             <?php endforeach; ?>
         </table>
-    </div>
+    <?php else: ?>
+        <p>No orders found in the database.</p>
+    <?php endif; ?>
+</div>
