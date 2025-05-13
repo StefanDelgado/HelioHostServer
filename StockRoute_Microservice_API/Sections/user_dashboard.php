@@ -53,6 +53,37 @@ if ($result->num_rows > 0) {
         <?php endforeach; ?>
     </table>
 </div>
+
+<!-- Edit Modal -->
+<div id="editModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.4); z-index:1000; align-items:center; justify-content:center;">
+    <div style="background:#fff; padding:30px 20px; border-radius:8px; max-width:400px; margin:100px auto; position:relative;">
+        <h3>Edit User</h3>
+        <form id="editForm">
+            <input type="hidden" id="edit-id">
+            <div>
+                <label for="edit-username">Username:</label>
+                <input type="text" id="edit-username" required>
+            </div>
+            <div>
+                <label for="edit-email">Email:</label>
+                <input type="email" id="edit-email" required>
+            </div>
+            <div>
+                <label for="edit-role">Role ID:</label>
+                <input type="number" id="edit-role" required>
+            </div>
+            <div>
+                <label for="edit-type">Type ID:</label>
+                <input type="number" id="edit-type" required>
+            </div>
+            <div style="margin-top:15px; text-align:right;">
+                <button type="button" id="cancelEdit" style="margin-right:10px;">Cancel</button>
+                <button type="submit">Confirm</button>
+            </div>
+        </form>
+    </div>
+</div>
+
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // DELETE
@@ -73,40 +104,50 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // EDIT (simple prompt for demonstration)
+    // EDIT - open modal
     document.querySelectorAll('.edit-btn').forEach(function(btn) {
         btn.addEventListener('click', function() {
             const row = btn.closest('tr');
-            const id = btn.dataset.id;
-            const username = row.children[1].textContent;
-            const email = row.children[2].textContent;
-            const role_id = row.children[3].textContent;
-            const type_id = row.children[4].textContent;
-
-            const newUsername = prompt('Edit username:', username);
-            const newEmail = prompt('Edit email:', email);
-            const newRoleId = prompt('Edit role ID:', role_id);
-            const newTypeId = prompt('Edit type ID:', type_id);
-
-            if(newUsername && newEmail && newRoleId && newTypeId) {
-                fetch('../api/microservice_user/crud/edit.php', {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({
-                        id: id,
-                        username: newUsername,
-                        email: newEmail,
-                        role_id: newRoleId,
-                        type_id: newTypeId
-                    })
-                })
-                .then(res => res.json())
-                .then(data => {
-                    alert(data.message);
-                    location.reload();
-                });
-            }
+            document.getElementById('edit-id').value = btn.dataset.id;
+            document.getElementById('edit-username').value = row.children[1].textContent;
+            document.getElementById('edit-email').value = row.children[2].textContent;
+            document.getElementById('edit-role').value = row.children[3].textContent;
+            document.getElementById('edit-type').value = row.children[4].textContent;
+            document.getElementById('editModal').style.display = 'flex';
         });
     });
+
+    // Cancel button
+    document.getElementById('cancelEdit').onclick = function() {
+        document.getElementById('editModal').style.display = 'none';
+    };
+
+    // Submit edit form
+    document.getElementById('editForm').onsubmit = function(e) {
+        e.preventDefault();
+        const id = document.getElementById('edit-id').value;
+        const username = document.getElementById('edit-username').value;
+        const email = document.getElementById('edit-email').value;
+        const role_id = document.getElementById('edit-role').value;
+        const type_id = document.getElementById('edit-type').value;
+
+        fetch('../api/microservice_user/crud/edit.php', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                id: id,
+                username: username,
+                email: email,
+                role_id: role_id,
+                type_id: type_id
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+            alert(data.message);
+            document.getElementById('editModal').style.display = 'none';
+            location.reload();
+        });
+    };
 });
 </script>
