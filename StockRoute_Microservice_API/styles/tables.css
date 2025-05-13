@@ -1,0 +1,110 @@
+/* Table Styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    background-color: white;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+/* Header Styles */
+th {
+    background-color: #007BFF;
+    color: white;
+    font-weight: bold;
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+/* Cell Styles */
+td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    vertical-align: middle;
+}
+
+/* Alternating Row Colors */
+tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+/* Hover Effect */
+tr:hover {
+    background-color: #f2f2f2;
+}
+
+/* Section Headers */
+.section h2 {
+    color: #333;
+    margin: 20px 0;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #007BFF;
+}
+
+/* Legend Styles */
+.section h3 {
+    color: #555;
+    margin: 15px 0;
+}
+
+.section h4 {
+    color: #666;
+    margin: 10px 0;
+}
+
+/* List Styles for Legends */
+.section ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0 0 20px 0;
+}
+
+.section li {
+    padding: 5px 0;
+    color: #666;
+}
+
+/* Responsive Table */
+@media screen and (max-width: 768px) {
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+    
+    th, td {
+        min-width: 100px;
+    }
+}
+
+/* Status Colors for Orders */
+.status-pending {
+    color: #ffc107;
+}
+
+.status-processing {
+    color: #17a2b8;
+}
+
+.status-delivered {
+    color: #28a745;
+}
+
+.status-cancelled {
+    color: #dc3545;
+}
+
+/* Price Formatting */
+.price {
+    font-family: monospace;
+    white-space: nowrap;
+}
+
+/* Empty State Message */
+.no-data {
+    text-align: center;
+    padding: 20px;
+    color: #666;
+    font-style: italic;
+}

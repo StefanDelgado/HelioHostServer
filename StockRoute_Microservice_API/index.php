@@ -10,6 +10,7 @@ include 'Settings/db.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project Dashboard</title>
     <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/tables.css">
     <style>
         body {
             text-align: center;
