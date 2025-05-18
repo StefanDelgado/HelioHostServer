@@ -72,7 +72,7 @@ function initDashboardModals(section) {
                     role_id: editForm.querySelector('#edit-role').value,
                     type_id: editForm.querySelector('#edit-type').value
                 };
-                endpoint = '../api/microservice_user/crud/edit.php';
+                endpoint = 'api/microservice_user/crud/edit.php';
             } else if (section === 'supplier_products') {
                 payload = {
                     product_id: editForm.querySelector('#edit-product-id').value,
@@ -84,14 +84,14 @@ function initDashboardModals(section) {
                     description: editForm.querySelector('#edit-description').value,
                     image_url: ''
                 };
-                endpoint = '../api/microservice_supplier_products/crud/edit.php';
+                endpoint = 'api/microservice_supplier_products/crud/edit.php';
             } else if (section === 'delivery_orders') {
                 payload = {
                     order_id: editForm.querySelector('#edit-order-id').value,
                     order_status: editForm.querySelector('#edit-order-status').value
                     // Add more fields if needed
                 };
-                endpoint = '../api/microservice_delivery_orders/crud/edit.php';
+                endpoint = 'api/microservice_delivery_orders/crud/edit.php';
             }
 
             fetch(endpoint, {
