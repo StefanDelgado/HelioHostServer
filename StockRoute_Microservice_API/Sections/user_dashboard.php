@@ -56,7 +56,7 @@ if ($result->num_rows > 0) {
 
 <!-- Edit Modal -->
 <div id="editModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.4); z-index:1000; align-items:center; justify-content:center;">
-    <div style="background:#fff; padding:30px 20px; border-radius:8px; max-width:400px; margin:100px auto; position:relative;">
+    <div style="background:#fff; padding:30px 20px; border-radius:8px; max-width:400px; margin:auto; position:relative;">
         <h3>Edit User</h3>
         <form id="editForm">
             <input type="hidden" id="edit-id">
@@ -83,3 +83,21 @@ if ($result->num_rows > 0) {
         </form>
     </div>
 </div>
+
+<script>
+document.querySelectorAll('.edit-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+        const row = btn.closest('tr');
+        document.getElementById('edit-id').value = btn.dataset.id;
+        document.getElementById('edit-username').value = row.children[1].textContent;
+        document.getElementById('edit-email').value = row.children[2].textContent;
+        document.getElementById('edit-role').value = row.children[3].textContent;
+        document.getElementById('edit-type').value = row.children[4].textContent;
+        document.getElementById('editModal').style.display = 'flex'; // <-- Use flex
+    });
+});
+
+document.getElementById('editModal').addEventListener('click', function(e) {
+    if (e.target === this) this.style.display = 'none';
+});
+</script>
