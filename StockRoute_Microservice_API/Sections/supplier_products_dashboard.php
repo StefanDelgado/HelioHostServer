@@ -49,3 +49,39 @@ if ($result && $result->num_rows > 0) {
         <p>No products found in the database.</p>
     <?php endif; ?>
 </div>
+<div id="editModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.4); z-index:1000; align-items:center; justify-content:center;">
+    <div style="background:#fff; padding:30px 20px; border-radius:8px; max-width:400px; margin:auto; position:relative;">
+        <h3>Edit Product</h3>
+        <form id="editForm">
+            <input type="hidden" id="edit-product-id">
+            <div>
+                <label for="edit-product-name">Product Name:</label>
+                <input type="text" id="edit-product-name" required>
+            </div>
+            <div>
+                <label for="edit-supplier-name">Supplier:</label>
+                <input type="text" id="edit-supplier-name" required>
+            </div>
+            <div>
+                <label for="edit-price">Price:</label>
+                <input type="number" step="0.01" id="edit-price" required>
+            </div>
+            <div>
+                <label for="edit-stock">Stock:</label>
+                <input type="number" id="edit-stock" required>
+            </div>
+            <div>
+                <label for="edit-category">Category:</label>
+                <input type="text" id="edit-category" required>
+            </div>
+            <div>
+                <label for="edit-description">Description:</label>
+                <textarea id="edit-description" required></textarea>
+            </div>
+            <div style="margin-top:15px; text-align:right;">
+                <button type="button" id="cancelEdit" style="margin-right:10px;">Cancel</button>
+                <button type="submit">Confirm</button>
+            </div>
+        </form>
+    </div>
+</div>

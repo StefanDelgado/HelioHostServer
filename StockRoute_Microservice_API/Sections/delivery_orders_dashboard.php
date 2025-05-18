@@ -52,3 +52,26 @@ if ($result && $result->num_rows > 0) {
         <p>No orders found in the database.</p>
     <?php endif; ?>
 </div>
+<div id="editModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.4); z-index:1000; align-items:center; justify-content:center;">
+    <div style="background:#fff; padding:30px 20px; border-radius:8px; max-width:400px; margin:auto; position:relative;">
+        <h3>Edit Delivery Order</h3>
+        <form id="editForm">
+            <input type="hidden" id="edit-order-id">
+            <div>
+                <label for="edit-order-status">Order Status:</label>
+                <select id="edit-order-status" required>
+                    <option value="Pending">Pending</option>
+                    <option value="Processing">Processing</option>
+                    <option value="Ready to Pickup">Ready to Pickup</option>
+                    <option value="Delivering">Delivering</option>
+                    <option value="Delivered">Delivered</option>
+                    <option value="Cancelled">Cancelled</option>
+                </select>
+            </div>
+            <div style="margin-top:15px; text-align:right;">
+                <button type="button" id="cancelEdit" style="margin-right:10px;">Cancel</button>
+                <button type="submit">Confirm</button>
+            </div>
+        </form>
+    </div>
+</div>
