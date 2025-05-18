@@ -85,19 +85,57 @@ if ($result->num_rows > 0) {
 </div>
 
 <script>
-document.querySelectorAll('.edit-btn').forEach(function(btn) {
-    btn.addEventListener('click', function() {
-        const row = btn.closest('tr');
-        document.getElementById('edit-id').value = btn.dataset.id;
-        document.getElementById('edit-username').value = row.children[1].textContent;
-        document.getElementById('edit-email').value = row.children[2].textContent;
-        document.getElementById('edit-role').value = row.children[3].textContent;
-        document.getElementById('edit-type').value = row.children[4].textContent;
-        document.getElementById('editModal').style.display = 'flex'; // <-- Use flex
+document.addEventListener('DOMContentLoaded', function() {
+    // EDIT - open modal
+    document.querySelectorAll('.edit-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            const row = btn.closest('tr');
+            document.getElementById('edit-id').value = btn.dataset.id;
+            document.getElementById('edit-username').value = row.children[1].textContent;
+            document.getElementById('edit-email').value = row.children[2].textContent;
+            document.getElementById('edit-role').value = row.children[3].textContent;
+            document.getElementById('edit-type').value = row.children[4].textContent;
+            document.getElementById('editModal').style.display = 'flex';
+        });
     });
-});
 
-document.getElementById('editModal').addEventListener('click', function(e) {
-    if (e.target === this) this.style.display = 'none';
+    // Cancel button
+    document.getElementById('cancelEdit').onclick = function() {
+        document.getElementById('editModal').style.display = 'none';
+    };
+
+    // Hide modal on background click
+    document.getElementById('editModal').addEventListener('click', function(e) {
+        if (e.target === this) this.style.display = 'none';
+    });
+
+    // Submit edit form
+    document.getElementById('editForm').onsubmit = function(e) {
+        e.preventDefault();
+        const id = document.getElementById('edit-id').value;
+        const username = document.getElementById('edit-username').value;
+        const email = document.getElementById('edit-email').value;
+        const role_id = document.getElementById('edit-role').value;
+        const type_id = document.getElementById('edit-type').value;
+
+        fetch('../api/microservice_user/crud/edit.php', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                id: id,
+                username: username,
+                email: email,
+                role_id: role_id,
+                type_id: type_id
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+            alert(data.message);
+            document.getElementById('editModal').style.display = 'none';
+            location.reload();
+        });
+    };
 });
 </script>
+
