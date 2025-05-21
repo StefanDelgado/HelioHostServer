@@ -108,7 +108,16 @@ function initDashboardModals(section) {
     // Delete buttons
     container.querySelectorAll('.delete-btn').forEach(function(btn) {
         btn.onclick = function() {
-            if (!confirm('Are you sure you want to delete this item?')) return;
+            let itemType = '';
+            if (section === 'user') itemType = 'user';
+            else if (section === 'supplier_products') itemType = 'product';
+            else if (section === 'delivery_orders') itemType = 'order';
+
+            const confirmed = window.confirm(`Are you sure you want to delete this ${itemType}? This action cannot be undone.`);
+            if (!confirmed) {
+                alert('Deletion cancelled.');
+                return;
+            }
 
             let payload = {};
             let endpoint = '';
