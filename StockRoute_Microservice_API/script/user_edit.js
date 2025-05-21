@@ -105,10 +105,10 @@ function initDashboardModals(section) {
         };
     }
 
-    // Delete buttons
-    container.querySelectorAll('.delete-btn').forEach(function(btn) {
-        btn.onclick = function() {
-            console.log('Delete button clicked:', btn.dataset.id, section); // Debug
+    // Use event delegation for delete buttons
+    container.addEventListener('click', function(e) {
+        if (e.target.classList.contains('delete-btn')) {
+            const btn = e.target;
             let itemType = '';
             if (section === 'user') itemType = 'user';
             else if (section === 'supplier_products') itemType = 'product';
@@ -143,6 +143,6 @@ function initDashboardModals(section) {
                 alert(data.message);
                 location.reload();
             });
-        };
+        }
     });
 }
