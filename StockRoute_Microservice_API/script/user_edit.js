@@ -1,5 +1,4 @@
 function initDashboardModals(section) {
-    // Section can be 'user', 'supplier_products', or 'delivery_orders'
     const container = document.getElementById('section-container');
     if (!container) return;
 
@@ -77,12 +76,10 @@ function initDashboardModals(section) {
                 payload = {
                     product_id: editForm.querySelector('#edit-product-id').value,
                     name: editForm.querySelector('#edit-product-name').value,
-                    supplier_id: '', // Set this if you have a way to select supplier
                     price: editForm.querySelector('#edit-price').value,
                     stock: editForm.querySelector('#edit-stock').value,
                     category: editForm.querySelector('#edit-category').value,
                     description: editForm.querySelector('#edit-description').value,
-                    image_url: ''
                 };
                 endpoint = 'api/microservice_supplier_products/crud/edit.php';
             } else if (section === 'delivery_orders') {
@@ -107,4 +104,35 @@ function initDashboardModals(section) {
             });
         };
     }
+
+    // Delete buttons
+    container.querySelectorAll('.delete-btn').forEach(function(btn) {
+        btn.onclick = function() {
+            if (!confirm('Are you sure you want to delete this item?')) return;
+
+            let payload = {};
+            let endpoint = '';
+            if (section === 'user') {
+                payload = { id: btn.dataset.id };
+                endpoint = 'api/microservice_user/crud/delete.php';
+            } else if (section === 'supplier_products') {
+                payload = { product_id: btn.dataset.id };
+                endpoint = 'api/microservice_supplier_products/crud/delete.php';
+            } else if (section === 'delivery_orders') {
+                payload = { order_id: btn.dataset.id };
+                endpoint = 'api/microservice_delivery_orders/crud/delete.php';
+            }
+
+            fetch(endpoint, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            })
+            .then(res => res.json())
+            .then(data => {
+                alert(data.message);
+                location.reload();
+            });
+        };
+    });
 }
