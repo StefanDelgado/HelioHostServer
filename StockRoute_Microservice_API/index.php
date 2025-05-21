@@ -92,10 +92,6 @@ include 'Settings/db.php';
     <div id="section-container">
         <!-- Loaded section content will appear here -->
     </div>
-    <script>
-document.addEventListener('DOMContentLoaded', function() {
-    initUserDashboardModals();
-});
-</script>
+   
 </body>
 </html>
