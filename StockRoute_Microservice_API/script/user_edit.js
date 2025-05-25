@@ -159,42 +159,38 @@ function initDashboardModals(section) {
         }
     }
 
-    document.addEventListener('DOMContentLoaded', function() {
-        // Show create modal
-        document.getElementById('section-container').addEventListener('click', function(e) {
-            if (e.target && e.target.id === 'createUserBtn') {
-                document.getElementById('createModal').style.display = 'flex';
-            }
-        });
+    // Create modal logic (event delegation)
+    container.addEventListener('click', function(e) {
+        if (e.target && e.target.id === 'createUserBtn') {
+            const createModal = container.querySelector('#createModal');
+            if (createModal) createModal.style.display = 'flex';
+        }
+        if (e.target && e.target.id === 'cancelCreate') {
+            const createModal = container.querySelector('#createModal');
+            if (createModal) createModal.style.display = 'none';
+        }
+    });
 
-        // Cancel create
-        document.getElementById('section-container').addEventListener('click', function(e) {
-            if (e.target && e.target.id === 'cancelCreate') {
-                document.getElementById('createModal').style.display = 'none';
-            }
-        });
-
-        // Submit create form
-        document.getElementById('section-container').addEventListener('submit', function(e) {
-            if (e.target && e.target.id === 'createForm') {
-                e.preventDefault();
-                fetch('api/microservice_user/crud/create.php', {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({
-                        username: document.getElementById('create-username').value,
-                        email: document.getElementById('create-email').value,
-                        role_id: document.getElementById('create-role').value,
-                        type_id: document.getElementById('create-type').value
-                    })
+    container.addEventListener('submit', function(e) {
+        if (e.target && e.target.id === 'createForm') {
+            e.preventDefault();
+            fetch('api/microservice_user/crud/create.php', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    username: container.querySelector('#create-username').value,
+                    email: container.querySelector('#create-email').value,
+                    role_id: container.querySelector('#create-role').value,
+                    type_id: container.querySelector('#create-type').value
                 })
-                .then(res => res.json())
-                .then(data => {
-                    alert(data.message);
-                    document.getElementById('createModal').style.display = 'none';
-                    location.reload();
-                });
-            }
-        });
+            })
+            .then(res => res.json())
+            .then(data => {
+                alert(data.message);
+                const createModal = container.querySelector('#createModal');
+                if (createModal) createModal.style.display = 'none';
+                location.reload();
+            });
+        }
     });
 }
