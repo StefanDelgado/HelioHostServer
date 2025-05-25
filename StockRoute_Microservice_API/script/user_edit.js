@@ -106,43 +106,95 @@ function initDashboardModals(section) {
     }
 
     // Use event delegation for delete buttons
+    let deleteId = null;
     container.addEventListener('click', function(e) {
         if (e.target.classList.contains('delete-btn')) {
-            const btn = e.target;
-            let itemType = '';
-            if (section === 'user') itemType = 'user';
-            else if (section === 'supplier_products') itemType = 'product';
-            else if (section === 'delivery_orders') itemType = 'order';
-
-            const confirmed = window.confirm(`Are you sure you want to delete this ${itemType}? This action cannot be undone.`);
-            if (!confirmed) {
-                alert('Deletion cancelled.');
-                return;
-            }
-
-            let payload = {};
-            let endpoint = '';
-            if (section === 'user') {
-                payload = { id: btn.dataset.id };
-                endpoint = 'api/microservice_user/crud/delete.php';
-            } else if (section === 'supplier_products') {
-                payload = { product_id: btn.dataset.id };
-                endpoint = 'api/microservice_supplier_products/crud/delete.php';
-            } else if (section === 'delivery_orders') {
-                payload = { order_id: btn.dataset.id };
-                endpoint = 'api/microservice_delivery_orders/crud/delete.php';
-            }
-
-            fetch(endpoint, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            })
-            .then(res => res.json())
-            .then(data => {
-                alert(data.message);
-                location.reload();
-            });
+            deleteId = e.target.dataset.id;
+            // Show the delete modal
+            const deleteModal = container.querySelector('#deleteModal');
+            if (deleteModal) deleteModal.style.display = 'flex';
         }
+    });
+
+    // Handle cancel and confirm in the modal
+    const deleteModal = container.querySelector('#deleteModal');
+    if (deleteModal) {
+        const cancelDelete = deleteModal.querySelector('#cancelDelete');
+        const confirmDelete = deleteModal.querySelector('#confirmDelete');
+
+        if (cancelDelete) {
+            cancelDelete.onclick = function() {
+                deleteModal.style.display = 'none';
+                deleteId = null;
+            };
+        }
+        if (confirmDelete) {
+            confirmDelete.onclick = function() {
+                if (!deleteId) return;
+                let payload = {};
+                let endpoint = '';
+                if (section === 'user') {
+                    payload = { id: deleteId };
+                    endpoint = 'api/microservice_user/crud/delete.php';
+                } else if (section === 'supplier_products') {
+                    payload = { product_id: deleteId };
+                    endpoint = 'api/microservice_supplier_products/crud/delete.php';
+                } else if (section === 'delivery_orders') {
+                    payload = { order_id: deleteId };
+                    endpoint = 'api/microservice_delivery_orders/crud/delete.php';
+                }
+
+                fetch(endpoint, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                })
+                .then(res => res.json())
+                .then(data => {
+                    alert(data.message);
+                    deleteModal.style.display = 'none';
+                    location.reload();
+                });
+            };
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Show create modal
+        document.getElementById('section-container').addEventListener('click', function(e) {
+            if (e.target && e.target.id === 'createUserBtn') {
+                document.getElementById('createModal').style.display = 'flex';
+            }
+        });
+
+        // Cancel create
+        document.getElementById('section-container').addEventListener('click', function(e) {
+            if (e.target && e.target.id === 'cancelCreate') {
+                document.getElementById('createModal').style.display = 'none';
+            }
+        });
+
+        // Submit create form
+        document.getElementById('section-container').addEventListener('submit', function(e) {
+            if (e.target && e.target.id === 'createForm') {
+                e.preventDefault();
+                fetch('api/microservice_user/crud/create.php', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        username: document.getElementById('create-username').value,
+                        email: document.getElementById('create-email').value,
+                        role_id: document.getElementById('create-role').value,
+                        type_id: document.getElementById('create-type').value
+                    })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    alert(data.message);
+                    document.getElementById('createModal').style.display = 'none';
+                    location.reload();
+                });
+            }
+        });
     });
 }

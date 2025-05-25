@@ -36,7 +36,9 @@ if ($result->num_rows > 0) {
             <th>Email</th>
             <th>Role ID</th>
             <th>Type ID</th>
-            <th>Actions</th>
+            <th>Actions
+                <button id="createUserBtn" style="margin-left:10px;">Create</button>
+            </th>
         </tr>
         <?php foreach ($users as $user): ?>
         <tr data-id="<?= $user['id'] ?>">
@@ -84,5 +86,44 @@ if ($result->num_rows > 0) {
     </div>
 </div>
 
+<!-- Delete Modal -->
+<div id="deleteModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.4); z-index:1001; align-items:center; justify-content:center;">
+    <div style="background:#fff; padding:30px 20px; border-radius:8px; max-width:350px; margin:auto; position:relative;">
+        <h3>Confirm Deletion</h3>
+        <p>Are you sure you want to delete this user? This action cannot be undone.</p>
+        <div style="margin-top:15px; text-align:right;">
+            <button type="button" id="cancelDelete" style="margin-right:10px;">Cancel</button>
+            <button type="button" id="confirmDelete" style="background:#dc3545; color:#fff;">Delete</button>
+        </div>
+    </div>
+</div>
 
+<!-- Create Modal -->
+<div id="createModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.4); z-index:1002; align-items:center; justify-content:center;">
+    <div style="background:#fff; padding:30px 20px; border-radius:8px; max-width:400px; margin:auto; position:relative;">
+        <h3>Create User</h3>
+        <form id="createForm">
+            <div>
+                <label for="create-username">Username:</label>
+                <input type="text" id="create-username" required>
+            </div>
+            <div>
+                <label for="create-email">Email:</label>
+                <input type="email" id="create-email" required>
+            </div>
+            <div>
+                <label for="create-role">Role ID:</label>
+                <input type="number" id="create-role" required>
+            </div>
+            <div>
+                <label for="create-type">Type ID:</label>
+                <input type="number" id="create-type" required>
+            </div>
+            <div style="margin-top:15px; text-align:right;">
+                <button type="button" id="cancelCreate" style="margin-right:10px;">Cancel</button>
+                <button type="submit">Create</button>
+            </div>
+        </form>
+    </div>
+</div>
 
