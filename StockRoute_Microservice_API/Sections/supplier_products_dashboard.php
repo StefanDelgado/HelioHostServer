@@ -30,7 +30,7 @@ if ($result && $result->num_rows > 0) {
                 <th>Actions</th>
             </tr>
             <?php foreach ($products as $product): ?>
-            <tr data-id="<?= $product['product_id'] ?>">
+            <tr data-id="<?= $product['product_id'] ?>" data-supplier-id="<?= $product['supplier_id'] ?>">
                 <td><?= htmlspecialchars($product['product_id']) ?></td>
                 <td><?= htmlspecialchars($product['name']) ?></td>
                 <td><?= htmlspecialchars($product['supplier_name']) ?></td>
@@ -54,6 +54,7 @@ if ($result && $result->num_rows > 0) {
         <h3>Edit Product</h3>
         <form id="editForm">
             <input type="hidden" id="edit-product-id">
+            <input type="hidden" id="edit-supplier-id">
             <div>
                 <label for="edit-product-name">Product Name:</label>
                 <input type="text" id="edit-product-name" required>

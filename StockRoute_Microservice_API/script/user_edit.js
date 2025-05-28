@@ -22,6 +22,7 @@ function initDashboardModals(section) {
                 modal.querySelector('#edit-product-id').value = btn.dataset.id;
                 modal.querySelector('#edit-product-name').value = row.children[1].textContent;
                 modal.querySelector('#edit-supplier-name').value = row.children[2].textContent;
+                modal.querySelector('#edit-supplier-id').value = row.dataset.supplierId; // <-- set supplier_id
                 modal.querySelector('#edit-price').value = row.children[3].textContent.replace(/[^\d.]/g, '');
                 modal.querySelector('#edit-stock').value = row.children[4].textContent;
                 modal.querySelector('#edit-category').value = row.children[5].textContent;
@@ -76,6 +77,7 @@ function initDashboardModals(section) {
                 payload = {
                     product_id: editForm.querySelector('#edit-product-id').value,
                     name: editForm.querySelector('#edit-product-name').value,
+                    supplier_id: editForm.querySelector('#edit-supplier-id').value, // <-- send supplier_id
                     price: editForm.querySelector('#edit-price').value,
                     stock: editForm.querySelector('#edit-stock').value,
                     category: editForm.querySelector('#edit-category').value,
