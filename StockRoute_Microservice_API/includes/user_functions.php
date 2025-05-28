@@ -31,4 +31,3 @@ function create_microservice_user($conn, $email, $username, $password, $role_id,
         return ['success' => false, 'message' => 'Error: ' . $stmt->error];
     }
 }
-?>

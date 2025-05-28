@@ -2,6 +2,7 @@
 // filepath: c:\xampp\htdocs\WebDesign_BSITA-2\2nd sem\Joshan_System\HelioHostServer\StockRoute_Microservice_API\Sections\user_dashboard.php
 
 include_once '../Settings/db.php';
+include 'includes/user_functions.php';
 
 // Fetch users from database
 $sql = "SELECT * FROM microservice_users ORDER BY id ASC";
@@ -11,6 +12,24 @@ $users = [];
 if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
         $users[] = $row;
+    }
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $email = $_POST['email'];
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+    $role_id = $_POST['role_id'];
+    $type_id = $_POST['type_id'];
+
+    $result = create_microservice_user($conn, $email, $username, $password, $role_id, $type_id);
+
+    if ($result['success']) {
+        // Success: redirect or show message
+        echo "<script>alert('{$result['message']}'); window.location.href='your_dashboard.php';</script>";
+    } else {
+        // Error: show message
+        echo "<script>alert('{$result['message']}'); window.history.back();</script>";
     }
 }
 ?>
@@ -102,26 +121,26 @@ if ($result->num_rows > 0) {
 <div id="createModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.4); z-index:1002; align-items:center; justify-content:center;">
     <div style="background:#fff; padding:30px 20px; border-radius:8px; max-width:400px; margin:auto; position:relative;">
         <h3>Create User</h3>
-        <form id="createForm">
+        <form method="POST" action="your_create_handler.php">
             <div>
                 <label for="create-username">Username:</label>
-                <input type="text" id="create-username" required>
+                <input type="text" id="create-username" name="username" required>
             </div>
             <div>
                 <label for="create-email">Email:</label>
-                <input type="email" id="create-email" required>
+                <input type="email" id="create-email" name="email" required>
             </div>
             <div>
                 <label for="create-password">Password:</label>
-                <input type="password" id="create-password" required>
+                <input type="password" id="create-password" name="password" required>
             </div>
             <div>
                 <label for="create-role">Role ID:</label>
-                <input type="number" id="create-role" required>
+                <input type="number" id="create-role" name="role_id" required>
             </div>
             <div>
                 <label for="create-type">Type ID:</label>
-                <input type="number" id="create-type" required>
+                <input type="number" id="create-type" name="type_id" required>
             </div>
             <div style="margin-top:15px; text-align:right;">
                 <button type="button" id="cancelCreate" style="margin-right:10px;">Cancel</button>
