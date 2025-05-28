@@ -75,3 +75,14 @@ if ($result && $result->num_rows > 0) {
         </form>
     </div>
 </div>
+<!-- Delete Modal -->
+<div id="deleteModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.4); z-index:1001; align-items:center; justify-content:center;">
+    <div style="background:#fff; padding:30px 20px; border-radius:8px; max-width:350px; margin:auto; position:relative;">
+        <h3>Confirm Deletion</h3>
+        <p>Are you sure you want to delete this delivery order? This action cannot be undone.</p>
+        <div style="margin-top:15px; text-align:right;">
+            <button type="button" id="cancelDelete" style="margin-right:10px;">Cancel</button>
+            <button type="button" id="confirmDelete" style="background:#dc3545; color:#fff;">Delete</button>
+        </div>
+    </div>
+</div>
