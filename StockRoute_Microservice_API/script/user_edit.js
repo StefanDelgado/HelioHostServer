@@ -174,7 +174,7 @@ function initDashboardModals(section) {
     container.addEventListener('submit', function(e) {
         if (e.target && e.target.id === 'createForm') {
             e.preventDefault();
-            fetch('api/microservice_user/crud/create.php', {
+            fetch('/StockRoute_Microservice_API/api/microservice_user/crud/create.php', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({
