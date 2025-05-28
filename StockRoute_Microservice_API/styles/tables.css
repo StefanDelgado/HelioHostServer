@@ -3,53 +3,54 @@ table {
     width: 100%;
     border-collapse: collapse;
     margin: 20px 0;
-    background-color: white;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    background-color: #fff;
+    box-shadow: 0 1px 3px rgba(255, 193, 7, 0.15);
 }
 
 /* Header Styles */
 th {
-    background-color: #007BFF;
-    color: white;
+    background-color: #ffe082; /* light yellow */
+    color: #b38f00; /* dark yellow */
     font-weight: bold;
     padding: 12px;
     text-align: left;
-    border: 1px solid #ddd;
+    border: 1px solid #ffe082;
 }
 
 /* Cell Styles */
 td {
     padding: 10px;
-    border: 1px solid #ddd;
+    border: 1px solid #ffe082;
     vertical-align: middle;
+    background: #fffde7;
 }
 
 /* Alternating Row Colors */
 tr:nth-child(even) {
-    background-color: #f8f9fa;
+    background-color: #fff9c4;
 }
 
 /* Hover Effect */
 tr:hover {
-    background-color: #f2f2f2;
+    background-color: #fffde7;
 }
 
 /* Section Headers */
 .section h2 {
-    color: #333;
+    color: #b38f00;
     margin: 20px 0;
     padding-bottom: 10px;
-    border-bottom: 2px solid #007BFF;
+    border-bottom: 2px solid #ffe082;
 }
 
 /* Legend Styles */
 .section h3 {
-    color: #555;
+    color: #b38f00;
     margin: 15px 0;
 }
 
 .section h4 {
-    color: #666;
+    color: #b38f00;
     margin: 10px 0;
 }
 
@@ -62,7 +63,7 @@ tr:hover {
 
 .section li {
     padding: 5px 0;
-    color: #666;
+    color: #b38f00;
 }
 
 /* Responsive Table */
@@ -72,7 +73,6 @@ tr:hover {
         overflow-x: auto;
         white-space: nowrap;
     }
-    
     th, td {
         min-width: 100px;
     }
@@ -82,15 +82,12 @@ tr:hover {
 .status-pending {
     color: #ffc107;
 }
-
 .status-processing {
     color: #17a2b8;
 }
-
 .status-delivered {
     color: #28a745;
 }
-
 .status-cancelled {
     color: #dc3545;
 }
@@ -105,18 +102,11 @@ tr:hover {
 .no-data {
     text-align: center;
     padding: 20px;
-    color: #666;
+    color: #b38f00;
     font-style: italic;
 }
 
-.edit-btn, .delete-btn {
-    padding: 5px 12px;
-    margin: 0 2px;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-    font-size: 0.95em;
-}
+/* Button Styles (override for table actions) */
 .edit-btn {
     background-color: #ffc107;
     color: #222;
@@ -130,4 +120,11 @@ tr:hover {
 }
 .delete-btn:hover {
     background-color: #b52a37;
+}
+.create-btn {
+    background-color: #4caf50;
+    color: #fff;
+}
+.create-btn:hover {
+    background-color: #388e3c;
 }

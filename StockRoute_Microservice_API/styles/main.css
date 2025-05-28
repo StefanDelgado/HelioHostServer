@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    background-color: #fff; /* White background */
     margin: 0;
     padding: 0;
 }
@@ -10,13 +10,14 @@ body {
     margin: 0 auto;
     background-color: #fff;
     padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px rgba(255, 193, 7, 0.15); /* subtle yellow shadow */
     margin-top: 50px;
+    border-radius: 10px;
 }
 
 h2 {
     text-align: center;
-    color: #333;
+    color: #b38f00; /* dark yellow */
 }
 
 form {
@@ -26,40 +27,89 @@ form {
 
 label {
     margin-bottom: 5px;
-    color: #555;
+    color: #b38f00;
 }
 
 input[type="text"],
 input[type="email"],
-input[type="password"] {
+input[type="password"],
+input[type="number"],
+textarea,
+select {
     padding: 10px;
     margin-bottom: 20px;
-    border: 1px solid #ccc;
+    border: 1px solid #ffe082;
     border-radius: 5px;
+    background: #fffde7;
 }
 
 button {
     padding: 10px;
-    background-color: #5cb85c;
-    color: #fff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    font-weight: bold;
 }
 
-button:hover {
-    background-color: #4cae4c;
+button#createUserBtn,
+button#createProductBtn,
+button[type="submit"].create-btn {
+    background-color: #4caf50; /* green */
+    color: #fff;
 }
 
+button.edit-btn,
+button[type="submit"].edit-btn {
+    background-color: #ffc107; /* yellow */
+    color: #222;
+}
+
+button.delete-btn,
+button[type="submit"].delete-btn {
+    background-color: #dc3545; /* red */
+    color: #fff;
+}
+
+button#createUserBtn:hover,
+button#createProductBtn:hover,
+button[type="submit"].create-btn:hover {
+    background-color: #388e3c;
+}
+
+button.edit-btn:hover,
+button[type="submit"].edit-btn:hover {
+    background-color: #e0a800;
+}
+
+button.delete-btn:hover,
+button[type="submit"].delete-btn:hover {
+    background-color: #b52a37;
+}
+
+button#cancelEdit,
+button#cancelDelete,
+button#cancelCreate,
+button#cancelCreateProduct {
+    background-color: #fffde7;
+    color: #b38f00;
+    border: 1px solid #ffe082;
+}
+
+button#cancelEdit:hover,
+button#cancelDelete:hover,
+button#cancelCreate:hover,
+button#cancelCreateProduct:hover {
+    background-color: #fff9c4;
+}
 
 .debug-panel {
-    background-color: #333;
-    color: #fff;
+    background-color: #ffc107;
+    color: #222;
     padding: 10px;
     text-align: center;
 }
 .debug-panel a {
-    color: #fff;
+    color: #b38f00;
     margin: 0 10px;
     text-decoration: none;
     cursor: pointer;
