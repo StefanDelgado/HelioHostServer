@@ -15,13 +15,26 @@ if ($result && $result->num_rows > 0) {
     }
 }
 
-// Fetch all suppliers for the dropdown
-$suppliers_result = $conn->query("SELECT id, username FROM microservice_users WHERE role_id = 303");
+// Debug output to verify suppliers
+if (empty($suppliers)) {
+    error_log("No suppliers found in database");
+}
+
+// Modify suppliers query to include role name for verification
+$suppliers_result = $conn->query("
+    SELECT m.id, m.username, m.role_id 
+    FROM microservice_users m 
+    WHERE m.role_id = 303 
+    ORDER BY m.username ASC
+");
+
 $suppliers = [];
 if ($suppliers_result && $suppliers_result->num_rows > 0) {
     while($row = $suppliers_result->fetch_assoc()) {
         $suppliers[] = $row;
     }
+} else {
+    error_log("Suppliers query failed or returned no results: " . $conn->error);
 }
 ?>
 <div id="products" class="section">
@@ -69,9 +82,13 @@ if ($suppliers_result && $suppliers_result->num_rows > 0) {
             </div>
             <div>
                 <label for="edit-supplier-id">Supplier:</label>
-                <select id="edit-supplier-id">
+                <select id="edit-supplier-id" required>
+                    <option value="">Select a Supplier</option>
                     <?php foreach ($suppliers as $supplier): ?>
-                        <option value="<?= $supplier['id'] ?>"><?= htmlspecialchars($supplier['username']) ?></option>
+                        <option value="<?= htmlspecialchars($supplier['id']) ?>">
+                            <?= htmlspecialchars($supplier['username']) ?> 
+                            (ID: <?= htmlspecialchars($supplier['id']) ?>)
+                        </option>
                     <?php endforeach; ?>
                 </select>
             </div>
