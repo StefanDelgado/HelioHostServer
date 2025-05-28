@@ -118,16 +118,10 @@ if ($suppliers_result && $suppliers_result->num_rows > 0) {
                 <label for="create-product-name">Product Name:</label>
                 <input type="text" id="create-product-name" required>
             </div>
+            
             <div>
-                <label for="create-supplier-id">Supplier:</label>
-                <select id="create-supplier-id" required>
-                    <option value="">Select a Supplier</option>
-                    <?php foreach ($suppliers as $supplier): ?>
-                        <option value="<?= htmlspecialchars($supplier['id']) ?>">
-                            <?= htmlspecialchars($supplier['username']) ?> (ID: <?= htmlspecialchars($supplier['id']) ?>)
-                        </option>
-                    <?php endforeach; ?>
-                </select>
+                <label for="create-supplier-id">Supplier ID:</label>
+                <input type="number" id="create-supplier-id" required>
             </div>
             <div>
                 <label for="create-price">Price:</label>
