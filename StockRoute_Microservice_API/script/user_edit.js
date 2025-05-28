@@ -180,11 +180,44 @@ function initDashboardModals(section) {
         }
     });
 
+    container.addEventListener('submit', function(e) {
+        if (e.target && e.target.id === 'createForm') {
+            e.preventDefault();
+            fetch('api/microservice_user/crud/create.php', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    email: container.querySelector('#create-email').value,
+                    username: container.querySelector('#create-username').value,
+                    password: container.querySelector('#create-password').value,
+                    role_id: container.querySelector('#create-role').value,
+                    type_id: container.querySelector('#create-type').value
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                alert(data.message);
+                const createModal = container.querySelector('#createModal');
+                if (createModal) createModal.style.display = 'none';
+                location.reload();
+            });
+        }
+    });
 
     // Product Create Modal logic (event delegation)
-    const createProductForm = container.querySelector('#createProductForm');
-    if (createProductForm) {
-        createProductForm.onsubmit = function(e) {
+    container.addEventListener('click', function(e) {
+        if (e.target && e.target.id === 'createProductBtn') {
+            const createProductModal = container.querySelector('#createProductModal');
+            if (createProductModal) createProductModal.style.display = 'flex';
+        }
+        if (e.target && e.target.id === 'cancelCreateProduct') {
+            const createProductModal = container.querySelector('#createProductModal');
+            if (createProductModal) createProductModal.style.display = 'none';
+        }
+    });
+
+    container.addEventListener('submit', function(e) {
+        if (e.target && e.target.id === 'createProductForm') {
             e.preventDefault();
             fetch('api/microservice_supplier_products/crud/create.php', {
                 method: 'POST',
@@ -196,7 +229,7 @@ function initDashboardModals(section) {
                     stock: container.querySelector('#create-stock').value,
                     category: container.querySelector('#create-category').value,
                     description: container.querySelector('#create-description').value,
-                    image_url: ''
+                    image_url: '' // Add if you want to support images
                 })
             })
             .then(res => res.json())
@@ -206,6 +239,8 @@ function initDashboardModals(section) {
                 if (createProductModal) createProductModal.style.display = 'none';
                 location.reload();
             });
-        };
-    }
+        }
+    });
+
+ 
 }
