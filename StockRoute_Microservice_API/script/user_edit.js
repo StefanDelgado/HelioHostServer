@@ -25,6 +25,10 @@ function initDashboardModals(section) {
                 const supplierSelect = modal.querySelector('#edit-supplier-id');
                 if (supplierSelect) {
                     supplierSelect.value = row.dataset.supplierId;
+                    if (!supplierSelect.value) {
+                        // fallback: set to first option or alert
+                        supplierSelect.selectedIndex = 0;
+                    }
                 }
                 modal.querySelector('#edit-price').value = row.children[3].textContent.replace(/[^\d.]/g, '');
                 modal.querySelector('#edit-stock').value = row.children[4].textContent;
