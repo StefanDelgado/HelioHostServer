@@ -93,6 +93,10 @@ if ($suppliers_result && $suppliers_result->num_rows > 0) {
                 </select>
             </div>
             <div>
+                <label for="edit-supplier-id">Supplier ID:</label>
+                <input type="number" id="edit-supplier-id" readonly>
+            </div>
+            <div>
                 <label for="edit-price">Price:</label>
                 <input type="number" step="0.01" id="edit-price" required>
             </div>
