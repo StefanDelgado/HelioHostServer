@@ -11,36 +11,7 @@ include 'Settings/db.php';
     <title>Project Dashboard</title>
     <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" href="styles/tables.css">
-    <style>
-        body {
-            text-align: center;
-            font-family: Arial, sans-serif;
-            padding: 20px;
-        }
-        .tabs {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
-        .tab-btn {
-            padding: 10px 20px;
-            margin: 5px;
-            cursor: pointer;
-            background-color: #007BFF;
-            color: #fff;
-            border: none;
-            outline: none;
-            border-radius: 4px;
-        }
-        .tab-btn.active {
-            background-color: #0056b3;
-        }
-        #section-container {
-            margin: 0 auto;
-            max-width: 90%;
-            text-align: left;
-        }
-    </style>
+    
     <script src="script/user_edit.js"></script>
     <script>
         // Function to load a section from a separate file via AJAX
