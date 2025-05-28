@@ -35,19 +35,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 <div id="users" class="section">
     <h2>Microservice Users</h2>
-    <h3>Legend</h3>
-    <h4>Role ID</h4>
-    <ul>
-        <li>201 - Admin</li>
-        <li>202 - Owner</li>
-        <li>203 - Staff</li>
-    </ul>
-    <h4>Type ID</h4>
-    <ul>
-        <li>301 - Delivery</li>
-        <li>302 - Business</li>
-        <li>303 - Supplier</li>
-    </ul>
+    <div style="display: flex; gap: 40px; align-items: flex-start;">
+        <div>
+            <h4>Role ID</h4>
+            <ul>
+                <li>201 - Admin</li>
+                <li>202 - Owner</li>
+                <li>203 - Staff</li>
+            </ul>
+        </div>
+        <div>
+            <h4>Type ID</h4>
+            <ul>
+                <li>301 - Delivery</li>
+                <li>302 - Business</li>
+                <li>303 - Supplier</li>
+            </ul>
+        </div>
+    </div>
     <table>
         <tr>
             <th>ID</th>
