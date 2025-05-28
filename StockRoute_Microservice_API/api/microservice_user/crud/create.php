@@ -25,10 +25,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Use prepared statements
     $sql = "INSERT INTO microservice_users (email, username, password, api_id, date_created, role_id, type_id, date_updated) 
-            VALUES (?, ?, ?, ?, ?, (SELECT role_id FROM roles WHERE role_name = ?), ?, ?)";
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssssssis", $email, $username, $password, $api_id, $date_created, $roles, $type_id, $date_updated);
+    $stmt->bind_param("ssssiiis", $email, $username, $password, $api_id, $date_created, $roles, $type_id, $date_updated);
 
     if ($stmt->execute()) {
         echo json_encode(['message' => 'Microservice user registered successfully']);
