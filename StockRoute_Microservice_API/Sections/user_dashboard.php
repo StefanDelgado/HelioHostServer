@@ -2,7 +2,7 @@
 // filepath: c:\xampp\htdocs\WebDesign_BSITA-2\2nd sem\Joshan_System\HelioHostServer\StockRoute_Microservice_API\Sections\user_dashboard.php
 
 include_once '../Settings/db.php';
-include 'includes/user_functions.php';
+include '../includes/user_functions.php';
 
 // Fetch users from database
 $sql = "SELECT * FROM microservice_users ORDER BY id ASC";
