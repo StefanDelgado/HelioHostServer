@@ -180,7 +180,8 @@ function initDashboardModals(section) {
                 body: JSON.stringify({
                     username: container.querySelector('#create-username').value,
                     email: container.querySelector('#create-email').value,
-                    role_id: container.querySelector('#create-role').value,
+                    password: container.querySelector('#create-password').value,
+                    roles: container.querySelector('#create-role').value, // API expects 'roles' for role_name
                     type_id: container.querySelector('#create-type').value
                 })
             })

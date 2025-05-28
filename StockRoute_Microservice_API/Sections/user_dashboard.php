@@ -112,6 +112,10 @@ if ($result->num_rows > 0) {
                 <input type="email" id="create-email" required>
             </div>
             <div>
+                <label for="create-password">Password:</label>
+                <input type="password" id="create-password" required>
+            </div>
+            <div>
                 <label for="create-role">Role ID:</label>
                 <input type="number" id="create-role" required>
             </div>
