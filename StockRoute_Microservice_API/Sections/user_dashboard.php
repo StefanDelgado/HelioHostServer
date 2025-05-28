@@ -54,29 +54,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </div>
     <table>
-        <tr>
-            <th>ID</th>
-            <th>Username</th>
-            <th>Email</th>
-            <th>Role ID</th>
-            <th>Type ID</th>
-            <th>Actions
-                <button id="createUserBtn" style="margin-left:10px;">Create</button>
-            </th>
-        </tr>
-        <?php foreach ($users as $user): ?>
-        <tr data-id="<?= $user['id'] ?>">
-            <td><?= htmlspecialchars($user['id']) ?></td>
-            <td><?= htmlspecialchars($user['username']) ?></td>
-            <td><?= htmlspecialchars($user['email']) ?></td>
-            <td><?= htmlspecialchars($user['role_id']) ?></td>
-            <td><?= htmlspecialchars($user['type_id']) ?></td>
-            <td>
-                <button class="edit-btn" data-id="<?= $user['id'] ?>">Edit</button>
-                <button class="delete-btn" data-id="<?= $user['id'] ?>">Delete</button>
-            </td>
-        </tr>
-        <?php endforeach; ?>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Role ID</th>
+                <th>Type ID</th>
+                <th>Actions
+                    <button id="createUserBtn" style="margin-left:10px;">Create</button>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($users as $user): ?>
+            <tr data-id="<?= $user['id'] ?>">
+                <td><?= htmlspecialchars($user['id']) ?></td>
+                <td><?= htmlspecialchars($user['username']) ?></td>
+                <td><?= htmlspecialchars($user['email']) ?></td>
+                <td><?= htmlspecialchars($user['role_id']) ?></td>
+                <td><?= htmlspecialchars($user['type_id']) ?></td>
+                <td>
+                    <button class="edit-btn" data-id="<?= $user['id'] ?>">Edit</button>
+                    <button class="delete-btn" data-id="<?= $user['id'] ?>">Delete</button>
+                </td>
+            </tr>
+            <?php endforeach; ?>
+        </tbody>
     </table>
 </div>
 
