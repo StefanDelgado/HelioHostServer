@@ -49,7 +49,8 @@
         <p>Welcome to the project dashboard. Here you can access various projects:</p>
         <ul>
             <li><a href="StockRoute_Microservice_API/index.php">StockRoute</a></li>
-            <!-- Add more projects here as needed -->
+            <li><a href="NewWeb/index.php">EcoTracker</a></li>
+            
         </ul>
     </div>
 </body>

@@ -81,18 +81,6 @@ if ($suppliers_result && $suppliers_result->num_rows > 0) {
                 <input type="text" id="edit-product-name" required>
             </div>
             <div>
-                <label for="edit-supplier-id">Supplier:</label>
-                <select id="edit-supplier-id" required>
-                    <option value="">Select a Supplier</option>
-                    <?php foreach ($suppliers as $supplier): ?>
-                        <option value="<?= htmlspecialchars($supplier['id']) ?>">
-                            <?= htmlspecialchars($supplier['username']) ?> 
-                            (ID: <?= htmlspecialchars($supplier['id']) ?>)
-                        </option>
-                    <?php endforeach; ?>
-                </select>
-            </div>
-            <div>
                 <label for="edit-supplier-id">Supplier ID:</label>
                 <input type="number" id="edit-supplier-id" readonly>
             </div>
