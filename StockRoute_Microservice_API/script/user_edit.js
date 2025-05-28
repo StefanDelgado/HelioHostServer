@@ -22,7 +22,10 @@ function initDashboardModals(section) {
                 modal.querySelector('#edit-product-id').value = btn.dataset.id;
                 modal.querySelector('#edit-product-name').value = row.children[1].textContent;
                 // Set the supplier dropdown to the correct value
-                modal.querySelector('#edit-supplier-id').value = row.dataset.supplierId;
+                const supplierSelect = modal.querySelector('#edit-supplier-id');
+                if (supplierSelect) {
+                    supplierSelect.value = row.dataset.supplierId;
+                }
                 modal.querySelector('#edit-price').value = row.children[3].textContent.replace(/[^\d.]/g, '');
                 modal.querySelector('#edit-stock').value = row.children[4].textContent;
                 modal.querySelector('#edit-category').value = row.children[5].textContent;
