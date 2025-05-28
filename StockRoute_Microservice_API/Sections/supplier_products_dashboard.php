@@ -69,7 +69,7 @@ if ($suppliers_result && $suppliers_result->num_rows > 0) {
             </div>
             <div>
                 <label for="edit-supplier-id">Supplier:</label>
-                <select id="edit-supplier-id" required>
+                <select id="edit-supplier-id">
                     <?php foreach ($suppliers as $supplier): ?>
                         <option value="<?= $supplier['id'] ?>"><?= htmlspecialchars($supplier['username']) ?></option>
                     <?php endforeach; ?>
