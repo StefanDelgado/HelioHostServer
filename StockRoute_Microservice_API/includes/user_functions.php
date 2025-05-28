@@ -1,4 +1,5 @@
 <?php
+// Function to create a new microservice user
 function create_microservice_user($conn, $email, $username, $password, $role_id, $type_id) {
     $password_hashed = password_hash($password, PASSWORD_DEFAULT);
     $api_id = uniqid(); // Generate unique API ID

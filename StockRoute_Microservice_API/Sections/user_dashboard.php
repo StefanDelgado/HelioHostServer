@@ -121,7 +121,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <div id="createModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.4); z-index:1002; align-items:center; justify-content:center;">
     <div style="background:#fff; padding:30px 20px; border-radius:8px; max-width:400px; margin:auto; position:relative;">
         <h3>Create User</h3>
-        <form method="POST" action="create_microservice_user">
+        <form method="POST" action="user_dashboard.php">>
             <div>
                 <label for="create-username">Username:</label>
                 <input type="text" id="create-username" name="username" required>
