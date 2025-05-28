@@ -1,34 +1,33 @@
 <?php
-function create_microservice_user($conn, $email, $username, $password, $role_id, $type_id) {
-    $password_hashed = password_hash($password, PASSWORD_DEFAULT);
-    $api_id = uniqid(); // Generate unique API ID
-    $date_created = date('Y-m-d H:i:s');
-    $date_updated = $date_created;
+// filepath: StockRoute_Microservice_API/api/microservice_user/crud/create.php
 
-    $sql = "INSERT INTO microservice_users (email, username, password, api_id, date_created, role_id, type_id, date_updated) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: POST, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
 
-    $stmt = $conn->prepare($sql);
-    if (!$stmt) {
-        return ['success' => false, 'message' => 'Prepare failed: ' . $conn->error];
-    }
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') exit();
 
-    $stmt->bind_param(
-        "sssssiis",
-        $email,
-        $username,
-        $password_hashed,
-        $api_id,
-        $date_created,
-        $role_id,
-        $type_id,
-        $date_updated
-    );
+include '../../../Settings/db.php';
+include '../../../includes/user_functions.php';
 
-    if ($stmt->execute()) {
-        return ['success' => true, 'message' => 'Microservice user registered successfully'];
+$input = json_decode(file_get_contents('php://input'), true);
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $email = $input['email'];
+    $username = $input['username'];
+    $password = $input['password'];
+    $role_id = $input['role_id'];
+    $type_id = $input['type_id'];
+
+    $result = create_microservice_user($conn, $email, $username, $password, $role_id, $type_id);
+
+    if ($result['success']) {
+        echo json_encode(['message' => $result['message']]);
     } else {
-        return ['success' => false, 'message' => 'Error: ' . $stmt->error];
+        echo json_encode(['message' => $result['message']]);
     }
+} else {
+    echo json_encode(['message' => 'Invalid request method']);
+    http_response_code(405);
 }
 ?>

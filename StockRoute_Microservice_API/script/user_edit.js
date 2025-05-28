@@ -174,14 +174,14 @@ function initDashboardModals(section) {
     container.addEventListener('submit', function(e) {
         if (e.target && e.target.id === 'createForm') {
             e.preventDefault();
-            fetch('/StockRoute_Microservice_API/api/microservice_user/crud/create.php', {
+            fetch('api/microservice_user/crud/create.php', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({
-                    username: container.querySelector('#create-username').value,
                     email: container.querySelector('#create-email').value,
+                    username: container.querySelector('#create-username').value,
                     password: container.querySelector('#create-password').value,
-                    roles: container.querySelector('#create-role').value, // API expects 'roles' for role_name
+                    role_id: container.querySelector('#create-role').value,
                     type_id: container.querySelector('#create-type').value
                 })
             })
