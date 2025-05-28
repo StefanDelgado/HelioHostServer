@@ -203,4 +203,42 @@ function initDashboardModals(section) {
             });
         }
     });
+
+    // Product Create Modal logic (event delegation)
+    container.addEventListener('click', function(e) {
+        if (e.target && e.target.id === 'createProductBtn') {
+            const createProductModal = container.querySelector('#createProductModal');
+            if (createProductModal) createProductModal.style.display = 'flex';
+        }
+        if (e.target && e.target.id === 'cancelCreateProduct') {
+            const createProductModal = container.querySelector('#createProductModal');
+            if (createProductModal) createProductModal.style.display = 'none';
+        }
+    });
+
+    container.addEventListener('submit', function(e) {
+        if (e.target && e.target.id === 'createProductForm') {
+            e.preventDefault();
+            fetch('api/microservice_supplier_products/crud/create.php', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    name: container.querySelector('#create-product-name').value,
+                    supplier_id: container.querySelector('#create-supplier-id').value,
+                    price: container.querySelector('#create-price').value,
+                    stock: container.querySelector('#create-stock').value,
+                    category: container.querySelector('#create-category').value,
+                    description: container.querySelector('#create-description').value,
+                    image_url: '' // Add if you want to support images
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                alert(data.message);
+                const createProductModal = container.querySelector('#createProductModal');
+                if (createProductModal) createProductModal.style.display = 'none';
+                location.reload();
+            });
+        }
+    });
 }

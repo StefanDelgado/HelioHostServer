@@ -49,7 +49,9 @@ if ($suppliers_result && $suppliers_result->num_rows > 0) {
                 <th>Stock</th>
                 <th>Category</th>
                 <th>Description</th>
-                <th>Actions</th>
+                <th>Actions
+                    <button id="createProductBtn" style="margin-left:10px;">Create</button>
+                </th>
             </tr>
             <?php foreach ($products as $product): ?>
             <tr data-id="<?= $product['product_id'] ?>" data-supplier-id="<?= $product['supplier_id'] ?>">
@@ -105,5 +107,59 @@ if ($suppliers_result && $suppliers_result->num_rows > 0) {
                 <button type="submit">Confirm</button>
             </div>
         </form>
+    </div>
+</div>
+<!-- Create Product Modal -->
+<div id="createProductModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.4); z-index:1002; align-items:center; justify-content:center;">
+    <div style="background:#fff; padding:30px 20px; border-radius:8px; max-width:400px; margin:auto; position:relative;">
+        <h3>Create Product</h3>
+        <form id="createProductForm">
+            <div>
+                <label for="create-product-name">Product Name:</label>
+                <input type="text" id="create-product-name" required>
+            </div>
+            <div>
+                <label for="create-supplier-id">Supplier:</label>
+                <select id="create-supplier-id" required>
+                    <option value="">Select a Supplier</option>
+                    <?php foreach ($suppliers as $supplier): ?>
+                        <option value="<?= htmlspecialchars($supplier['id']) ?>">
+                            <?= htmlspecialchars($supplier['username']) ?> (ID: <?= htmlspecialchars($supplier['id']) ?>)
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            <div>
+                <label for="create-price">Price:</label>
+                <input type="number" step="0.01" id="create-price" required>
+            </div>
+            <div>
+                <label for="create-stock">Stock:</label>
+                <input type="number" id="create-stock" required>
+            </div>
+            <div>
+                <label for="create-category">Category:</label>
+                <input type="text" id="create-category" required>
+            </div>
+            <div>
+                <label for="create-description">Description:</label>
+                <textarea id="create-description" required></textarea>
+            </div>
+            <div style="margin-top:15px; text-align:right;">
+                <button type="button" id="cancelCreateProduct" style="margin-right:10px;">Cancel</button>
+                <button type="submit">Create</button>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- Delete Modal -->
+<div id="deleteModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.4); z-index:1001; align-items:center; justify-content:center;">
+    <div style="background:#fff; padding:30px 20px; border-radius:8px; max-width:350px; margin:auto; position:relative;">
+        <h3>Confirm Deletion</h3>
+        <p>Are you sure you want to delete this product? This action cannot be undone.</p>
+        <div style="margin-top:15px; text-align:right;">
+            <button type="button" id="cancelDelete" style="margin-right:10px;">Cancel</button>
+            <button type="button" id="confirmDelete" style="background:#dc3545; color:#fff;">Delete</button>
+        </div>
     </div>
 </div>
