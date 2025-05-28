@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #fff; /* White background */
+    background-color: #fff;
     margin: 0;
     padding: 0;
 }
@@ -10,14 +10,14 @@ body {
     margin: 0 auto;
     background-color: #fff;
     padding: 20px;
-    box-shadow: 0 0 10px rgba(255, 193, 7, 0.15); /* subtle yellow shadow */
+    box-shadow: 0 0 10px rgba(166, 139, 44, 0.10); /* softer gold shadow */
     margin-top: 50px;
     border-radius: 10px;
 }
 
 h2 {
     text-align: center;
-    color: #b38f00; /* dark yellow */
+    color: #a68b2c; /* muted gold */
 }
 
 form {
@@ -27,7 +27,7 @@ form {
 
 label {
     margin-bottom: 5px;
-    color: #b38f00;
+    color: #a68b2c;
 }
 
 input[type="text"],
@@ -38,9 +38,9 @@ textarea,
 select {
     padding: 10px;
     margin-bottom: 20px;
-    border: 1px solid #ffe082;
+    border: 1px solid #fff8e1;
     border-radius: 5px;
-    background: #fffde7;
+    background: #fffdf6; /* very pale yellow */
 }
 
 button {
@@ -54,19 +54,19 @@ button {
 button#createUserBtn,
 button#createProductBtn,
 button[type="submit"].create-btn {
-    background-color: #4caf50; /* green */
+    background-color: #4caf50;
     color: #fff;
 }
 
 button.edit-btn,
 button[type="submit"].edit-btn {
-    background-color: #ffc107; /* yellow */
+    background-color: #ffe082; /* soft yellow */
     color: #222;
 }
 
 button.delete-btn,
 button[type="submit"].delete-btn {
-    background-color: #dc3545; /* red */
+    background-color: #dc3545;
     color: #fff;
 }
 
@@ -78,7 +78,7 @@ button[type="submit"].create-btn:hover {
 
 button.edit-btn:hover,
 button[type="submit"].edit-btn:hover {
-    background-color: #e0a800;
+    background-color: #ffe9a7; /* even softer yellow */
 }
 
 button.delete-btn:hover,
@@ -90,8 +90,8 @@ button#cancelEdit,
 button#cancelDelete,
 button#cancelCreate,
 button#cancelCreateProduct {
-    background-color: #fffde7;
-    color: #b38f00;
+    background-color: #fff8e1;
+    color: #a68b2c;
     border: 1px solid #ffe082;
 }
 
@@ -99,17 +99,17 @@ button#cancelEdit:hover,
 button#cancelDelete:hover,
 button#cancelCreate:hover,
 button#cancelCreateProduct:hover {
-    background-color: #fff9c4;
+    background-color: #fffbe7;
 }
 
 .debug-panel {
-    background-color: #ffc107;
+    background-color: #ffe082;
     color: #222;
     padding: 10px;
     text-align: center;
 }
 .debug-panel a {
-    color: #b38f00;
+    color: #a68b2c;
     margin: 0 10px;
     text-decoration: none;
     cursor: pointer;
