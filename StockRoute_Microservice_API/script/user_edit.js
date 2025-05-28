@@ -21,8 +21,8 @@ function initDashboardModals(section) {
             } else if (section === 'supplier_products') {
                 modal.querySelector('#edit-product-id').value = btn.dataset.id;
                 modal.querySelector('#edit-product-name').value = row.children[1].textContent;
-                modal.querySelector('#edit-supplier-name').value = row.children[2].textContent;
-                modal.querySelector('#edit-supplier-id').value = row.dataset.supplierId; // <-- set supplier_id
+                // Set the supplier dropdown to the correct value
+                modal.querySelector('#edit-supplier-id').value = row.dataset.supplierId;
                 modal.querySelector('#edit-price').value = row.children[3].textContent.replace(/[^\d.]/g, '');
                 modal.querySelector('#edit-stock').value = row.children[4].textContent;
                 modal.querySelector('#edit-category').value = row.children[5].textContent;

@@ -14,6 +14,15 @@ if ($result && $result->num_rows > 0) {
         $products[] = $row;
     }
 }
+
+// Fetch all suppliers for the dropdown
+$suppliers_result = $conn->query("SELECT id, username FROM microservice_users WHERE role_id = 303");
+$suppliers = [];
+if ($suppliers_result && $suppliers_result->num_rows > 0) {
+    while($row = $suppliers_result->fetch_assoc()) {
+        $suppliers[] = $row;
+    }
+}
 ?>
 <div id="products" class="section">
     <h2>Supplier Products</h2>
@@ -54,14 +63,17 @@ if ($result && $result->num_rows > 0) {
         <h3>Edit Product</h3>
         <form id="editForm">
             <input type="hidden" id="edit-product-id">
-            <input type="hidden" id="edit-supplier-id">
             <div>
                 <label for="edit-product-name">Product Name:</label>
                 <input type="text" id="edit-product-name" required>
             </div>
             <div>
-                <label for="edit-supplier-name">Supplier:</label>
-                <input type="text" id="edit-supplier-name" required>
+                <label for="edit-supplier-id">Supplier:</label>
+                <select id="edit-supplier-id" required>
+                    <?php foreach ($suppliers as $supplier): ?>
+                        <option value="<?= $supplier['id'] ?>"><?= htmlspecialchars($supplier['username']) ?></option>
+                    <?php endforeach; ?>
+                </select>
             </div>
             <div>
                 <label for="edit-price">Price:</label>
